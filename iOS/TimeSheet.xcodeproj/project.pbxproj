@@ -1,0 +1,514 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B8D08CA01798816900B22905 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8D08C9F1798816900B22905 /* UIKit.framework */; };
+		B8D08CA21798816900B22905 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8D08CA11798816900B22905 /* Foundation.framework */; };
+		B8D08CA41798816900B22905 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8D08CA31798816900B22905 /* CoreGraphics.framework */; };
+		B8D08CA61798816900B22905 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8D08CA51798816900B22905 /* CoreData.framework */; };
+		B8D08CAC1798816900B22905 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B8D08CAA1798816900B22905 /* InfoPlist.strings */; };
+		B8D08CAE1798816900B22905 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D08CAD1798816900B22905 /* main.m */; };
+		B8D08CB21798816900B22905 /* NTSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D08CB11798816900B22905 /* NTSAppDelegate.m */; };
+		B8D08CB41798816900B22905 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B8D08CB31798816900B22905 /* Default.png */; };
+		B8D08CB61798816900B22905 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8D08CB51798816900B22905 /* Default@2x.png */; };
+		B8D08CB81798816900B22905 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B8D08CB71798816900B22905 /* Default-568h@2x.png */; };
+		B8D08CBB1798816900B22905 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8D08CB91798816900B22905 /* MainStoryboard_iPhone.storyboard */; };
+		B8D08CBE1798816900B22905 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8D08CBC1798816900B22905 /* MainStoryboard_iPad.storyboard */; };
+		B8D08CC11798816900B22905 /* TimeSheet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B8D08CBF1798816900B22905 /* TimeSheet.xcdatamodeld */; };
+		B8D08CC41798816900B22905 /* NTSMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D08CC31798816900B22905 /* NTSMasterViewController.m */; };
+		B8D08CC71798816900B22905 /* NTSDayDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D08CC61798816900B22905 /* NTSDayDetailViewController.m */; };
+		B8D08CCF1798816900B22905 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8D08CCE1798816900B22905 /* SenTestingKit.framework */; };
+		B8D08CD01798816900B22905 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8D08C9F1798816900B22905 /* UIKit.framework */; };
+		B8D08CD11798816900B22905 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8D08CA11798816900B22905 /* Foundation.framework */; };
+		B8D08CD21798816900B22905 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8D08CA51798816900B22905 /* CoreData.framework */; };
+		B8D08CDA1798816900B22905 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B8D08CD81798816900B22905 /* InfoPlist.strings */; };
+		B8D08CDD1798816900B22905 /* TimeSheetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D08CDC1798816900B22905 /* TimeSheetTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B8D08CD31798816900B22905 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B8D08C941798816900B22905 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B8D08C9B1798816900B22905;
+			remoteInfo = TimeSheet;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B8D08C9C1798816900B22905 /* TimeSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8D08C9F1798816900B22905 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B8D08CA11798816900B22905 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B8D08CA31798816900B22905 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B8D08CA51798816900B22905 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		B8D08CA91798816900B22905 /* TimeSheet-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TimeSheet-Info.plist"; sourceTree = "<group>"; };
+		B8D08CAB1798816900B22905 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B8D08CAD1798816900B22905 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B8D08CAF1798816900B22905 /* TimeSheet-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TimeSheet-Prefix.pch"; sourceTree = "<group>"; };
+		B8D08CB01798816900B22905 /* NTSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTSAppDelegate.h; sourceTree = "<group>"; };
+		B8D08CB11798816900B22905 /* NTSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTSAppDelegate.m; sourceTree = "<group>"; };
+		B8D08CB31798816900B22905 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		B8D08CB51798816900B22905 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		B8D08CB71798816900B22905 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B8D08CBA1798816900B22905 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		B8D08CBD1798816900B22905 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		B8D08CC01798816900B22905 /* TimeSheet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TimeSheet.xcdatamodel; sourceTree = "<group>"; };
+		B8D08CC21798816900B22905 /* NTSMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTSMasterViewController.h; sourceTree = "<group>"; };
+		B8D08CC31798816900B22905 /* NTSMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTSMasterViewController.m; sourceTree = "<group>"; };
+		B8D08CC51798816900B22905 /* NTSDayDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTSDayDetailViewController.h; sourceTree = "<group>"; };
+		B8D08CC61798816900B22905 /* NTSDayDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NTSDayDetailViewController.m; sourceTree = "<group>"; };
+		B8D08CCD1798816900B22905 /* TimeSheetTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimeSheetTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8D08CCE1798816900B22905 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		B8D08CD71798816900B22905 /* TimeSheetTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TimeSheetTests-Info.plist"; sourceTree = "<group>"; };
+		B8D08CD91798816900B22905 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B8D08CDB1798816900B22905 /* TimeSheetTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeSheetTests.h; sourceTree = "<group>"; };
+		B8D08CDC1798816900B22905 /* TimeSheetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeSheetTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B8D08C991798816900B22905 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8D08CA01798816900B22905 /* UIKit.framework in Frameworks */,
+				B8D08CA21798816900B22905 /* Foundation.framework in Frameworks */,
+				B8D08CA41798816900B22905 /* CoreGraphics.framework in Frameworks */,
+				B8D08CA61798816900B22905 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B8D08CC91798816900B22905 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8D08CCF1798816900B22905 /* SenTestingKit.framework in Frameworks */,
+				B8D08CD01798816900B22905 /* UIKit.framework in Frameworks */,
+				B8D08CD11798816900B22905 /* Foundation.framework in Frameworks */,
+				B8D08CD21798816900B22905 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B8D08C931798816900B22905 = {
+			isa = PBXGroup;
+			children = (
+				B8D08CA71798816900B22905 /* TimeSheet */,
+				B8D08CD51798816900B22905 /* TimeSheetTests */,
+				B8D08C9E1798816900B22905 /* Frameworks */,
+				B8D08C9D1798816900B22905 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B8D08C9D1798816900B22905 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B8D08C9C1798816900B22905 /* TimeSheet.app */,
+				B8D08CCD1798816900B22905 /* TimeSheetTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B8D08C9E1798816900B22905 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B8D08C9F1798816900B22905 /* UIKit.framework */,
+				B8D08CA11798816900B22905 /* Foundation.framework */,
+				B8D08CA31798816900B22905 /* CoreGraphics.framework */,
+				B8D08CA51798816900B22905 /* CoreData.framework */,
+				B8D08CCE1798816900B22905 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B8D08CA71798816900B22905 /* TimeSheet */ = {
+			isa = PBXGroup;
+			children = (
+				B8D08CB01798816900B22905 /* NTSAppDelegate.h */,
+				B8D08CB11798816900B22905 /* NTSAppDelegate.m */,
+				B8D08CB91798816900B22905 /* MainStoryboard_iPhone.storyboard */,
+				B8D08CBC1798816900B22905 /* MainStoryboard_iPad.storyboard */,
+				B8D08CC21798816900B22905 /* NTSMasterViewController.h */,
+				B8D08CC31798816900B22905 /* NTSMasterViewController.m */,
+				B8D08CC51798816900B22905 /* NTSDayDetailViewController.h */,
+				B8D08CC61798816900B22905 /* NTSDayDetailViewController.m */,
+				B8D08CBF1798816900B22905 /* TimeSheet.xcdatamodeld */,
+				B8D08CA81798816900B22905 /* Supporting Files */,
+			);
+			path = TimeSheet;
+			sourceTree = "<group>";
+		};
+		B8D08CA81798816900B22905 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B8D08CA91798816900B22905 /* TimeSheet-Info.plist */,
+				B8D08CAA1798816900B22905 /* InfoPlist.strings */,
+				B8D08CAD1798816900B22905 /* main.m */,
+				B8D08CAF1798816900B22905 /* TimeSheet-Prefix.pch */,
+				B8D08CB31798816900B22905 /* Default.png */,
+				B8D08CB51798816900B22905 /* Default@2x.png */,
+				B8D08CB71798816900B22905 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B8D08CD51798816900B22905 /* TimeSheetTests */ = {
+			isa = PBXGroup;
+			children = (
+				B8D08CDB1798816900B22905 /* TimeSheetTests.h */,
+				B8D08CDC1798816900B22905 /* TimeSheetTests.m */,
+				B8D08CD61798816900B22905 /* Supporting Files */,
+			);
+			path = TimeSheetTests;
+			sourceTree = "<group>";
+		};
+		B8D08CD61798816900B22905 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B8D08CD71798816900B22905 /* TimeSheetTests-Info.plist */,
+				B8D08CD81798816900B22905 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B8D08C9B1798816900B22905 /* TimeSheet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B8D08CE01798816900B22905 /* Build configuration list for PBXNativeTarget "TimeSheet" */;
+			buildPhases = (
+				B8D08C981798816900B22905 /* Sources */,
+				B8D08C991798816900B22905 /* Frameworks */,
+				B8D08C9A1798816900B22905 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TimeSheet;
+			productName = TimeSheet;
+			productReference = B8D08C9C1798816900B22905 /* TimeSheet.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B8D08CCC1798816900B22905 /* TimeSheetTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B8D08CE31798816900B22905 /* Build configuration list for PBXNativeTarget "TimeSheetTests" */;
+			buildPhases = (
+				B8D08CC81798816900B22905 /* Sources */,
+				B8D08CC91798816900B22905 /* Frameworks */,
+				B8D08CCA1798816900B22905 /* Resources */,
+				B8D08CCB1798816900B22905 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B8D08CD41798816900B22905 /* PBXTargetDependency */,
+			);
+			name = TimeSheetTests;
+			productName = TimeSheetTests;
+			productReference = B8D08CCD1798816900B22905 /* TimeSheetTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B8D08C941798816900B22905 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = NTS;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Ness;
+			};
+			buildConfigurationList = B8D08C971798816900B22905 /* Build configuration list for PBXProject "TimeSheet" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B8D08C931798816900B22905;
+			productRefGroup = B8D08C9D1798816900B22905 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B8D08C9B1798816900B22905 /* TimeSheet */,
+				B8D08CCC1798816900B22905 /* TimeSheetTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B8D08C9A1798816900B22905 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8D08CAC1798816900B22905 /* InfoPlist.strings in Resources */,
+				B8D08CB41798816900B22905 /* Default.png in Resources */,
+				B8D08CB61798816900B22905 /* Default@2x.png in Resources */,
+				B8D08CB81798816900B22905 /* Default-568h@2x.png in Resources */,
+				B8D08CBB1798816900B22905 /* MainStoryboard_iPhone.storyboard in Resources */,
+				B8D08CBE1798816900B22905 /* MainStoryboard_iPad.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B8D08CCA1798816900B22905 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8D08CDA1798816900B22905 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B8D08CCB1798816900B22905 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B8D08C981798816900B22905 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8D08CAE1798816900B22905 /* main.m in Sources */,
+				B8D08CB21798816900B22905 /* NTSAppDelegate.m in Sources */,
+				B8D08CC11798816900B22905 /* TimeSheet.xcdatamodeld in Sources */,
+				B8D08CC41798816900B22905 /* NTSMasterViewController.m in Sources */,
+				B8D08CC71798816900B22905 /* NTSDayDetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B8D08CC81798816900B22905 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8D08CDD1798816900B22905 /* TimeSheetTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B8D08CD41798816900B22905 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B8D08C9B1798816900B22905 /* TimeSheet */;
+			targetProxy = B8D08CD31798816900B22905 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B8D08CAA1798816900B22905 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B8D08CAB1798816900B22905 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B8D08CB91798816900B22905 /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B8D08CBA1798816900B22905 /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		B8D08CBC1798816900B22905 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B8D08CBD1798816900B22905 /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		B8D08CD81798816900B22905 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B8D08CD91798816900B22905 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B8D08CDE1798816900B22905 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B8D08CDF1798816900B22905 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B8D08CE11798816900B22905 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TimeSheet/TimeSheet-Prefix.pch";
+				INFOPLIST_FILE = "TimeSheet/TimeSheet-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B8D08CE21798816900B22905 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TimeSheet/TimeSheet-Prefix.pch";
+				INFOPLIST_FILE = "TimeSheet/TimeSheet-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		B8D08CE41798816900B22905 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TimeSheet.app/TimeSheet";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TimeSheet/TimeSheet-Prefix.pch";
+				INFOPLIST_FILE = "TimeSheetTests/TimeSheetTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		B8D08CE51798816900B22905 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TimeSheet.app/TimeSheet";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TimeSheet/TimeSheet-Prefix.pch";
+				INFOPLIST_FILE = "TimeSheetTests/TimeSheetTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B8D08C971798816900B22905 /* Build configuration list for PBXProject "TimeSheet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8D08CDE1798816900B22905 /* Debug */,
+				B8D08CDF1798816900B22905 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B8D08CE01798816900B22905 /* Build configuration list for PBXNativeTarget "TimeSheet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8D08CE11798816900B22905 /* Debug */,
+				B8D08CE21798816900B22905 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B8D08CE31798816900B22905 /* Build configuration list for PBXNativeTarget "TimeSheetTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8D08CE41798816900B22905 /* Debug */,
+				B8D08CE51798816900B22905 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B8D08CBF1798816900B22905 /* TimeSheet.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B8D08CC01798816900B22905 /* TimeSheet.xcdatamodel */,
+			);
+			currentVersion = B8D08CC01798816900B22905 /* TimeSheet.xcdatamodel */;
+			path = TimeSheet.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = B8D08C941798816900B22905 /* Project object */;
+}
