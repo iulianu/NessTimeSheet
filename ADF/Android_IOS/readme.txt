@@ -1,0 +1,1 @@
+Aici se va crea proiectul ADF Mobile Android & IOS
