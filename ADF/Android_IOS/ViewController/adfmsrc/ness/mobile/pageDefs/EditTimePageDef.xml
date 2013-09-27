@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="EditTimePageDef"
+                Package="ness.mobile.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="WorkData" id="WorkDataIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="WorkDataIterator" id="selectedDay">
+      <AttrNames>
+        <Item Value="selectedDay"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

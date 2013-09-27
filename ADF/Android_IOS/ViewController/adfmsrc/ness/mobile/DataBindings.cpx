@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="11.1.2.64.36" id="DataBindings"
+             SeparateXMLFiles="false" Package="ness.mobile" ClientType="Generic">
+  <pageMap>
+    <page path="/Calendar.amx" usageId="ness_mobile_CalendarPageDef"/>
+    <page path="/EditTime.amx" usageId="ness_mobile_EditTimePageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="ness_mobile_CalendarPageDef" path="ness.mobile.pageDefs.CalendarPageDef"/>
+    <page id="ness_mobile_EditTimePageDef" path="ness.mobile.pageDefs.EditTimePageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="WorkData" path="ness.mobile.WorkData"/>
+  </dataControlUsages>
+</Application>

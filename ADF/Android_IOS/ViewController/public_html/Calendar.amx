@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+         
+  <amx:panelPage id="pp1" styleClass="bodyStyle">
+    <amx:facet name="header">
+      <amx:outputText value="Header" id="ot1"/>
+    </amx:facet>
+    <amx:facet name="primary">
+      <amx:commandButton id="cb1"/>
+    </amx:facet>
+    <amx:facet name="secondary">
+      <amx:commandButton id="cb2"/>
+    </amx:facet>
+    <amx:listView var="row" id="lv1" styleClass="invisible">
+    <amx:listItem showLinkIcon="false" id="li1">
+    <amx:panelGroupLayout id="pgl1" halign="center" layout="horizontal">
+        
+          <amx:commandButton  text="&lt;" actionListener="#{bindings.gotoPrevious.execute}" id="cb3"/>
+      <amx:outputText value="#{bindings.textCurrDate.inputValue}" id="ot3" styleClass="textMonYear"
+                      />
+      
+     <amx:commandButton text="&gt;" id="cb4" actionListener="#{bindings.gotoNext.execute}" />
+    </amx:panelGroupLayout>
+    
+    <amx:tableLayout id="tl1" borderWidth="2" cellPadding="4" layout="weighted" halign="center"
+                      width="80%">
+    
+      <amx:rowLayout rendered="true">
+        <amx:cellFormat id="sun" halign="center">
+          <amx:outputText value="S"  styleClass="calendarHeader calendarHeaderFree"></amx:outputText>
+        </amx:cellFormat>
+        <amx:cellFormat id="mon" halign="center" styleClass="calendarHeader">
+          <amx:outputText value="M" styleClass="calendarHeader"></amx:outputText>
+          
+        </amx:cellFormat>
+        <amx:cellFormat id="tue" halign="center">
+          <amx:outputText value="T" styleClass="calendarHeader"></amx:outputText>
+        </amx:cellFormat>
+        <amx:cellFormat id="wen" halign="center">
+          <amx:outputText value="W" styleClass="calendarHeader"></amx:outputText>
+        </amx:cellFormat>
+        <amx:cellFormat id="thu" halign="center">
+          <amx:outputText value="T" styleClass="calendarHeader"></amx:outputText>
+        </amx:cellFormat>
+        <amx:cellFormat id="fri" halign="center">
+          <amx:outputText value="F" styleClass="calendarHeader"></amx:outputText>
+        </amx:cellFormat>
+        <amx:cellFormat id="sat" halign="center">
+          <amx:outputText value="S" styleClass="calendarHeader calendarHeaderFree"></amx:outputText>
+        </amx:cellFormat>
+      </amx:rowLayout>
+      <amx:iterator var="row" value="#{bindings.currentMonthWD.collectionModel}" id="i1">
+          <amx:rowLayout rendered="true" >
+         <amx:iterator var="zz" value="#{row.workingdays}">
+         <amx:cellFormat halign="center" 
+                         styleClass='#{zz.status == 0 ? "dayUNcomplete" :  (zz.status == 1 ? "daySaved" : (zz.status == 2 ? "dayApproved" : "dayFree")) }'> 
+                         
+              <amx:commandLink  styleClass="calendarCell" rendered="#{zz.dayOfMonth > 0}" text="#{zz.dayOfMonth}" id="cl1"
+                               action="*goToDay">
+                    <amx:setPropertyListener id="spl1" from="#{zz.status}" to="#{binding.selectedDay.inputValue}"/>
+                  </amx:commandLink>
+               
+            </amx:cellFormat></amx:iterator>
+      </amx:rowLayout>
+      </amx:iterator>
+    </amx:tableLayout>
+      <amx:actionListener binding="#{bindings.gotoPrevious.execute}" id="al1" type="swipeLeft"/>
+      <amx:actionListener binding="#{bindings.gotoNext.execute}" id="al2" type="swipeRight"/>
+    </amx:listItem>
+    </amx:listView>
+  </amx:panelPage>
+</amx:view>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="11.1.2.64.36" id="CalendarPageDef"
+                Package="ness.mobile.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variable Name="month" Type="java.lang.Integer"/>
+      <variable Name="year" Type="java.lang.Integer"/>
+    </variableIterator>
+    <iterator Binds="root" RangeSize="25" DataControl="WorkData" id="WorkDataIterator"/>
+    <accessorIterator MasterBinding="WorkDataIterator" Binds="strings" RangeSize="25" DataControl="WorkData"
+                      BeanClass="java.lang.String" id="stringsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="WorkData" id="WorkDataIterator1"/>
+    <accessorIterator MasterBinding="WorkDataIterator" Binds="currentMonthWD" RangeSize="10" DataControl="WorkData"
+                      BeanClass="ness.mobile.WorkingWeek" id="currentMonthWDIterator"/>
+    <accessorIterator id="selectedDayIterator" MasterBinding="WorkDataIterator" Binds="selectedDay" RangeSize="25"
+                      DataControl="WorkData" BeanClass="ness.mobile.WorkingDay"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="stringsIterator" id="strings">
+      <nodeDefinition Name="strings0">
+        <AttrNames>
+          <Item Value="element"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    
+    <tree IterBinding="currentMonthWDIterator" id="currentMonthWD">
+            <nodeDefinition DefName="ness.mobile.WorkingWeek" Name="workingWeek0">
+                <AttrNames>                    
+                    <Item Value="workingdays"/>
+                </AttrNames>
+                <Accessors>
+                    <Item Value="workingdays"/>
+                </Accessors>
+            </nodeDefinition>
+            <nodeDefinition DefName="workingdays.WorkingDay" Name="workingDay0">
+                <AttrNames>
+                    <Item Value="dayOfMonth"/>
+                    
+                </AttrNames>
+            </nodeDefinition>
+        </tree>
+    <attributeValues IterBinding="variables" id="monthAttr">
+      <AttrNames>
+        <Item Value="month"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="yearAttr">
+      <AttrNames>
+        <Item Value="year"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="gotoNext" RequiresUpdateModel="true" Action="invokeMethod" MethodName="gotoNext"
+                  IsViewObjectMethod="false" DataControl="WorkData" InstanceName="data.WorkData.dataProvider"/>
+    <methodAction id="gotoPrevious" RequiresUpdateModel="true" Action="invokeMethod" MethodName="gotoPrevious"
+                  IsViewObjectMethod="false" DataControl="WorkData" InstanceName="data.WorkData.dataProvider"/>
+    <attributeValues IterBinding="WorkDataIterator" id="textCurrDate">
+      <AttrNames>
+        <Item Value="textCurrDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="WorkDataIterator" id="selectedDay">
+      <AttrNames>
+        <Item Value="selectedDay"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

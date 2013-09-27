@@ -1,0 +1,64 @@
+
+.bodyStyle {
+width: 100%;
+}
+
+.calendarCell {
+    color: rgb(82,82,82) !important;
+}
+
+.calendarHeader {
+color:Gray !important;
+font-style: oblique;
+}
+
+.calendarHeaderFree {
+color:rgb(255,90,33) !important;
+}
+
+
+.textMonYear {
+font-size:small;
+color:rgb(247,247,247) !important;
+}
+
+.dayUNcomplete {
+background-color: rgb(198,198,198);
+
+}
+
+.daySaved {
+background-color:rgb(165,231,255);
+
+}
+
+.dayApproved {
+background-color:rgb(181,255,181);
+
+}
+
+.dayFree {
+color:rgb(255,90,33);
+
+}
+
+.calendarTable {
+width:80.0%;
+
+}
+
+.amx-listView.invisible {
+   border-style:none; 
+   background-color:transparent;
+   border-bottom:none;
+}
+ 
+.amx-listView.invisible .amx-listItem {
+  border-bottom: none;
+  border-style:none; 
+}
+ 
+.amx-listView.invisible .amx-listItem.amx-listItem-selected {
+  background-color:transparent;
+  border-bottom: none;
+}
