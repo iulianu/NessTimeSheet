@@ -52,21 +52,23 @@
       </amx:rowLayout>
       <amx:iterator var="row" value="#{bindings.currentMonthWD.collectionModel}" id="i1">
           <amx:rowLayout rendered="true" >
-         <amx:iterator var="zz" value="#{row.workingdays}">
+          
+         <amx:iterator var="zz" value="#{row.workingdays}" >
+         
          <amx:cellFormat halign="center" 
-                         styleClass='#{zz.status == 0 ? "dayUNcomplete" :  (zz.status == 1 ? "daySaved" : (zz.status == 2 ? "dayApproved" : "dayFree")) }'> 
-                         
-              <amx:commandLink  styleClass="calendarCell" rendered="#{zz.dayOfMonth > 0}" text="#{zz.dayOfMonth}" id="cl1"
-                               action="*goToDay">
-                    <amx:setPropertyListener id="spl1" from="#{zz.status}" to="#{binding.selectedDay.inputValue}"/>
+                         styleClass='#{zz.status == 0 ? "dayUNcomplete" :  (zz.status == 1 ? "daySaved" : (zz.status == 2 ? "dayApproved" : "dayFree")) }'>
+                  
+                  <amx:commandLink  styleClass="calendarCell" rendered="#{true}" text="#{zz.dayOfMonth}" id="cl12"
+                               action="*goToDay" actionListener="#{bindings.setSelDay.execute}">
+                    <amx:setPropertyListener id="sp2l1" from="#{zz.dayOfMonth}" to="#{viewScope.selDay}"/>
                   </amx:commandLink>
                
             </amx:cellFormat></amx:iterator>
       </amx:rowLayout>
       </amx:iterator>
     </amx:tableLayout>
-      <amx:actionListener binding="#{bindings.gotoPrevious.execute}" id="al1" type="swipeLeft"/>
-      <amx:actionListener binding="#{bindings.gotoNext.execute}" id="al2" type="swipeRight"/>
+      <amx:actionListener binding="#{bindings.gotoNext.execute}" id="al1" type="swipeLeft" />
+      <amx:actionListener binding="#{bindings.gotoPrevious.execute}" id="al2" type="swipeRight"/>
     </amx:listItem>
     </amx:listView>
   </amx:panelPage>

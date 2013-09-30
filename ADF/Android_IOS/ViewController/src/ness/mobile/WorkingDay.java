@@ -11,7 +11,7 @@ public class WorkingDay {
    
     
     
-    private int dayOfMonth;    
+    private String dayOfMonth;    
     private int status;    
     private List workItems;
     
@@ -36,11 +36,11 @@ public class WorkingDay {
         return workItems;
     }
 
-    public void setDayOfMonth(int dayOfMonth) {
+    public void setDayOfMonth(String dayOfMonth) {
         this.dayOfMonth = dayOfMonth;
     }
 
-    public int getDayOfMonth() {
+    public String getDayOfMonth() {
         return dayOfMonth;
     }
 }

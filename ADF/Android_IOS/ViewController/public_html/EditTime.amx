@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
-  <amx:panelPage id="pp1">
+  <amx:panelPage id="EditTimePanel">
     <amx:facet name="header">
      
       <amx:outputText value="Header" id="ot1"/>
@@ -16,5 +16,6 @@
       
     </amx:facet>
     <amx:outputText value="#{bindings.selectedDay.inputValue}" id="ot3"/>
+    <amx:outputText value="#{bindings.selectedDay.inputValue}" id="ot2"/>
   </amx:panelPage>
 </amx:view>

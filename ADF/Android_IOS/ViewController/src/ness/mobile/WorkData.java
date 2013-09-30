@@ -8,6 +8,8 @@ import java.util.Map;
 
 import  ness.mobile.Constants.WDStatus;
 
+import oracle.adfmf.framework.api.AdfmfContainerUtilities;
+import oracle.adfmf.framework.api.AdfmfJavaUtilities;
 import oracle.adfmf.java.beans.PropertyChangeListener;
 import oracle.adfmf.java.beans.PropertyChangeSupport;
 import oracle.adfmf.java.beans.ProviderChangeListener;
@@ -19,7 +21,7 @@ public class WorkData {
     private int year;
     private String textCurrDate;
     
-    private int selectedDay;
+    private String selectedDay;
     private transient PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     protected transient ProviderChangeSupport providerChangeSupport = new ProviderChangeSupport(this);
     
@@ -69,11 +71,11 @@ public class WorkData {
                 for (int j = 0; j < 7;j++) {
                     WorkingDay wd = new WorkingDay();
                     if (firstDayOfMonthInWeek > 1) {
-                        wd.setDayOfMonth(-1);
+                        wd.setDayOfMonth("-1");
                         firstDayOfMonthInWeek--;
                     }
                     else {
-                        wd.setDayOfMonth(++idxDayOfMonth);
+                        wd.setDayOfMonth(String.valueOf(++idxDayOfMonth));
                         if (i * j % 2 == 0)
                             wd.setStatus(WDStatus.COMPLETE_APPROVWED);
                         else 
@@ -93,7 +95,7 @@ public class WorkData {
                    
                     workW.setDayOfWeek(j + 1, wd);
                     if (idxDayOfMonth > noDaysInMonth) {
-                        wd.setDayOfMonth(-1);  
+                        wd.setDayOfMonth("-1");  
                     }
                     }  
                 wdsl.add(workW);
@@ -103,7 +105,15 @@ public class WorkData {
         }
     
     
+    
+    public void setSelDay(Integer d) {
+        setSelectedDay(String.valueOf(d));
+       
+    }
+    
     public void gotoPrevious() {
+        AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
+                                                                   "adf.mf.api.amx.doNavigation", new Object[] { "swipeLeft" });
         if (month == Calendar.JANUARY) {
             month = Calendar.DECEMBER;
             year--;
@@ -114,10 +124,13 @@ public class WorkData {
         }
         setTextCurrDate(months.get(new Integer(month)) + ", " + year);
         providerChangeSupport.fireProviderRefresh("currentMonthWD");
+        
        
     }
     
     public void gotoNext() {
+        AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(),
+                                                                   "adf.mf.api.amx.doNavigation", new Object[] { "swipeRight" });
         if (month == Calendar.DECEMBER) {
             month = Calendar.JANUARY;
             year++;
@@ -128,6 +141,7 @@ public class WorkData {
         }
         setTextCurrDate(months.get(new Integer(month)) + ", " + year);
         providerChangeSupport.fireProviderRefresh("currentMonthWD");
+       
         
     }
     
@@ -184,13 +198,13 @@ public class WorkData {
         return textCurrDate;
     }
 
-    public void setSelectedDay(int selectedDay) {
-        int oldSelectedDay = this.selectedDay;
+    public void setSelectedDay(String selectedDay) {
+        String oldSelectedDay = this.selectedDay;
         this.selectedDay = selectedDay;
         propertyChangeSupport.firePropertyChange("selectedDay", oldSelectedDay, selectedDay);
     }
 
-    public int getSelectedDay() {
+    public String getSelectedDay() {
         return selectedDay;
     }
 }

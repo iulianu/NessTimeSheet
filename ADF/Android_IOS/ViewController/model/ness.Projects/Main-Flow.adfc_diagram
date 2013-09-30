@@ -42,6 +42,36 @@
       <property
          name="fromOutcome">*goToDay</property>
       <property
-         name="sdm:polyPoints">R50,411.0,285.59766,687.0,241.94824,L50</property>
+         name="sdm:polyPoints">R46,411.0,282.09766,686.44934,238.44824,L46</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase5"
+      from="View3"
+      to="View2">
+      <property
+         name="fromOutcome">backToCalendar</property>
+      <property
+         name="sdm:polyPoints">L54,687.0,245.44824,411.5501,289.09766,R54</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase6"
+      from="View2"
+      to="View2">
+      <property
+         name="fromOutcome">swipeLeft</property>
+      <property
+         name="sdm:polyPoints">T44,366.5,231.59766,373.5,231.59766,T56</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase7"
+      from="View2"
+      to="View2">
+      <property
+         name="fromOutcome">swipeRight</property>
+      <property
+         name="sdm:polyPoints">B44,366.5,339.59766,373.5,339.59766,B56</property>
    </ControlFlowCase>
 </SDM>

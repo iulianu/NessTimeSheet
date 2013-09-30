@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="windows-1252" ?>
 <adfc-mobile-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.0">
+  <managed-bean id="__5">
+    <managed-bean-name>managedBean</managed-bean-name>
+    <managed-bean-class>ness.mobile.MainFlowManagedBean</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
   <task-flow-definition id="Main-Flow">
     <default-activity>view1</default-activity>
+    <managed-bean id="__6">
+      <managed-bean-name>managedBean1</managed-bean-name>
+      <managed-bean-class>ness.mobile.MainFlowManagedBean</managed-bean-class>
+      <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
     <view id="view1">
       <page>/Calendar.amx</page>
     </view>
@@ -13,6 +23,25 @@
       <control-flow-case id="__2">
         <from-outcome>*goToDay</from-outcome>
         <to-activity-id>view2</to-activity-id>
+        <transition>flipUp</transition>
+      </control-flow-case>
+      <control-flow-case id="__7">
+        <from-outcome>swipeLeft</from-outcome>
+        <to-activity-id>view1</to-activity-id>
+        <transition>slideRight</transition>
+      </control-flow-case>
+      <control-flow-case id="__8">
+        <from-outcome>swipeRight</from-outcome>
+        <to-activity-id>view1</to-activity-id>
+        <transition>slideLeft</transition>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__3">
+      <from-activity-id>view2</from-activity-id>
+      <control-flow-case id="__4">
+        <from-outcome>backToCalendar</from-outcome>
+        <to-activity-id>view1</to-activity-id>
+        <transition>flipDown</transition>
       </control-flow-case>
     </control-flow-rule>
   </task-flow-definition>

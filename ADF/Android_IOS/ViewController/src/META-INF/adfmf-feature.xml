@@ -4,7 +4,7 @@
     <adfmf:content id="ness.Projects.1">
       <adfmf:amx file="ness.Projects/Main-Flow.xml#Main-Flow">
         <adfmf:includes>
-          <adfmf:include type="StyleSheet" file="resources/css/timesheetMain.css" id="i1"/>
+          <adfmf:include type="JavaScript" file="resources/js/DeviceBackButton.js" id="i2"/>
         </adfmf:includes>
       </adfmf:amx>
     </adfmf:content>

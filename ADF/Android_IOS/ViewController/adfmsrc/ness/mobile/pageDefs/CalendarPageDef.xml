@@ -13,6 +13,8 @@
     <iterator Binds="root" RangeSize="25" DataControl="WorkData" id="WorkDataIterator1"/>
     <accessorIterator MasterBinding="WorkDataIterator" Binds="currentMonthWD" RangeSize="10" DataControl="WorkData"
                       BeanClass="ness.mobile.WorkingWeek" id="currentMonthWDIterator"/>
+    <accessorIterator MasterBinding="WorkDataIterator" Binds="currentWeekWD" RangeSize="10" DataControl="WorkData"
+                      BeanClass="ness.mobile.WorkingDay" id="currentWeekWDIterator"/>
     <accessorIterator id="selectedDayIterator" MasterBinding="WorkDataIterator" Binds="selectedDay" RangeSize="25"
                       DataControl="WorkData" BeanClass="ness.mobile.WorkingDay"/>
   </executables>
@@ -25,20 +27,35 @@
       </nodeDefinition>
     </tree>
     
+     <tree IterBinding="currentWeekWDIterator" id="currentWeekWD">
+            <nodeDefinition DefName="ness.mobile.WorkingDay" Name="currentWeekWD0">
+                <AttrNames>
+                    <Item Value="dayOfMonth"/>
+                </AttrNames>
+            </nodeDefinition>
+        </tree>
+        
     <tree IterBinding="currentMonthWDIterator" id="currentMonthWD">
             <nodeDefinition DefName="ness.mobile.WorkingWeek" Name="workingWeek0">
                 <AttrNames>                    
                     <Item Value="workingdays"/>
+                   
+                    
                 </AttrNames>
                 <Accessors>
                     <Item Value="workingdays"/>
+                    
                 </Accessors>
             </nodeDefinition>
-            <nodeDefinition DefName="workingdays.WorkingDay" Name="workingDay0">
+            <nodeDefinition DefName="ness.mobile.WorkingDay" Name="workingdays">
                 <AttrNames>
                     <Item Value="dayOfMonth"/>
-                    
+                    <Item Value="status"/>
                 </AttrNames>
+                 <Accessors>
+                    <Item Value="dayOfMonth"/>
+                    
+                </Accessors>
             </nodeDefinition>
         </tree>
     <attributeValues IterBinding="variables" id="monthAttr">
@@ -65,5 +82,9 @@
         <Item Value="selectedDay"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="setSelDay" InstanceName="data.WorkData.dataProvider" DataControl="WorkData"
+                  RequiresUpdateModel="true" Action="invokeMethod" MethodName="setSelDay" IsViewObjectMethod="false">
+      <NamedData NDName="d" NDValue="#{viewScope.selDay}" NDType="java.lang.Integer"/>
+    </methodAction>
   </bindings>
 </pageDefinition>
