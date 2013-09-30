@@ -20,7 +20,7 @@
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         self.clearsSelectionOnViewWillAppear = NO;
-        self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+        self.preferredContentSize = CGSizeMake(320.0, 600.0);
     }
     [super awakeFromNib];
 }
@@ -47,7 +47,7 @@
                                                                       target:self
                                                                       action:nil/*@selector(insertNewObject:)*/];
     UIFont *f1 = [UIFont fontWithName:@"Helvetica" size:24.0];
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:f1, UITextAttributeFont, nil];
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:f1, NSFontAttributeName, nil];
     [settingsButton setTitleTextAttributes:dict forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = settingsButton;
 
