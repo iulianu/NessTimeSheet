@@ -18,6 +18,7 @@ import com.ness.model.LoggedWork;
 import com.ness.model.Network;
 import com.ness.model.Networks;
 import com.ness.model.Order;
+import com.ness.model.WorkingDay;
 import com.ness.model.WorkingDayWithActivities;
 import com.ness.model.WorkingMonth;
 
@@ -29,9 +30,14 @@ public class TimeSheetService {
 	   @Produces(MediaType.APPLICATION_JSON)
 	   public Networks getAllNetworks()
 	   {
-		   
+		   Networks nets = new Networks();
+		   List<Network> items = new ArrayList<Network>();
+		   items.add(new Network());
+		   items.add(new Network());
+		   items.add(new Network());
+		   nets.setItems(items);
 
-	      throw new WebApplicationException(Response.Status.NOT_FOUND);
+		   return nets;
 	   }
 	   
 	   @Path("/network")
@@ -40,8 +46,8 @@ public class TimeSheetService {
 	   public Network getNetwork(@QueryParam("code") String code)
 	   {
 		   
-
-	      throw new WebApplicationException(Response.Status.NOT_FOUND);
+		   	
+	      return new Network();
 	   }
 	   
 	   @Path("/networkActivities")
@@ -49,9 +55,14 @@ public class TimeSheetService {
 	   @Produces(MediaType.APPLICATION_JSON)
 	   public Activities getNetworkActivities(@QueryParam("code") String networkCode)
 	   {
-		   
+		   Activities acts = new Activities();
+		   List<Activity> actL = new ArrayList<Activity>();
+		   actL.add(new Activity());
+		   actL.add(new Activity());
+		   actL.add(new Activity());
+		   acts.setItems(actL);
 
-	      throw new WebApplicationException(Response.Status.NOT_FOUND);
+	      return acts;
 	   }
 	   
 	   @Path("/workingMonth")
@@ -59,7 +70,12 @@ public class TimeSheetService {
 	   @Produces(MediaType.APPLICATION_JSON)
 	   public WorkingMonth getWorkingMonth(@QueryParam("userCode") String userCode, @QueryParam("monthYear") String monthYear) 
 	   {
-		   return new WorkingMonth();
+		   WorkingMonth wm = new WorkingMonth();
+		   List<WorkingDay> workingDays = new ArrayList<WorkingDay>();
+		   workingDays.add(new WorkingDay());
+		   workingDays.add(new WorkingDay());
+		   wm.setWorkingDays(workingDays);
+		   return wm;
 	   }
 	   
 	   @Path("/workingDay")
