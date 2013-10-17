@@ -4,63 +4,71 @@
          
   <amx:panelPage id="pp1" styleClass="bodyStyle">
     <amx:facet name="header">
-      <amx:outputText value="Header" id="ot1"/>
+      <amx:outputText value="Toolbar" id="ot1"/>
     </amx:facet>
     <amx:facet name="primary">
-      <amx:commandButton id="cb1"/>
+    
     </amx:facet>
     <amx:facet name="secondary">
-      <amx:commandButton id="cb2"/>
+    
     </amx:facet>
     <amx:listView var="row" id="lv1" styleClass="invisible">
     <amx:listItem showLinkIcon="false" id="li1">
-    <amx:panelGroupLayout id="pgl1" halign="center" layout="horizontal">
+    <amx:panelGroupLayout id="pgl1" halign="center" layout="horizontal" styleClass="calendarControlPanel ui-body-c">
         
-          <amx:commandButton  text="&lt;" actionListener="#{bindings.gotoPrevious.execute}" id="cb3"/>
-      <amx:outputText value="#{bindings.textCurrDate.inputValue}" id="ot3" styleClass="textMonYear"
-                      />
+          <amx:commandButton   text="&lt;" actionListener="#{bindings.gotoPrevious.execute}" id="cb3"
+                             styleClass="ui-datepicker-btn ui-datepicker-prev"/>
+      <amx:outputText value="#{bindings.textCurrDate.inputValue}" id="ot3" 
+                      styleClass="ui-datepicker-title"/>
       
-     <amx:commandButton text="&gt;" id="cb4" actionListener="#{bindings.gotoNext.execute}" />
+     <amx:commandButton text="&gt;" id="cb4" actionListener="#{bindings.gotoNext.execute}"
+                        styleClass="ui-datepicker-btn ui-datepicker-next"/>
     </amx:panelGroupLayout>
     
-    <amx:tableLayout id="tl1" borderWidth="2" cellPadding="4" layout="weighted" halign="center"
-                      width="80%">
+    <amx:tableLayout id="tl1" layout="weighted" halign="center"
+                       styleClass="ui-datepicker-calendar" width="100%">
     
-      <amx:rowLayout rendered="true">
-        <amx:cellFormat id="sun" halign="center">
+      <amx:rowLayout  rendered="true">
+        <amx:cellFormat id="sun" halign="center" header="true"  styleClass="ui-bar-c">
           <amx:outputText value="S"  styleClass="calendarHeader calendarHeaderFree"></amx:outputText>
         </amx:cellFormat>
-        <amx:cellFormat id="mon" halign="center" styleClass="calendarHeader">
+        <amx:cellFormat id="mon" halign="center" styleClass="ui-bar-c" header="true">
           <amx:outputText value="M" styleClass="calendarHeader"></amx:outputText>
           
         </amx:cellFormat>
-        <amx:cellFormat id="tue" halign="center">
+        <amx:cellFormat id="tue" halign="center" header="true"  styleClass="ui-bar-c">
           <amx:outputText value="T" styleClass="calendarHeader"></amx:outputText>
         </amx:cellFormat>
-        <amx:cellFormat id="wen" halign="center">
+        <amx:cellFormat id="wen" halign="center" header="true"  styleClass="ui-bar-c">
           <amx:outputText value="W" styleClass="calendarHeader"></amx:outputText>
         </amx:cellFormat>
-        <amx:cellFormat id="thu" halign="center">
+        <amx:cellFormat id="thu" halign="center" header="true"  styleClass="ui-bar-c">
           <amx:outputText value="T" styleClass="calendarHeader"></amx:outputText>
         </amx:cellFormat>
-        <amx:cellFormat id="fri" halign="center">
+        <amx:cellFormat id="fri" halign="center" header="true"  styleClass="ui-bar-c">
           <amx:outputText value="F" styleClass="calendarHeader"></amx:outputText>
         </amx:cellFormat>
-        <amx:cellFormat id="sat" halign="center">
+        <amx:cellFormat id="sat" halign="center" header="true"  styleClass="ui-bar-c">
           <amx:outputText value="S" styleClass="calendarHeader calendarHeaderFree"></amx:outputText>
         </amx:cellFormat>
       </amx:rowLayout>
+     
+       
       <amx:iterator var="row" value="#{bindings.currentMonthWD.collectionModel}" id="i1">
           <amx:rowLayout rendered="true" >
           
          <amx:iterator var="zz" value="#{row.workingdays}" >
          
          <amx:cellFormat halign="center" 
-                         styleClass='#{zz.status == 0 ? "dayUNcomplete" :  (zz.status == 1 ? "daySaved" : (zz.status == 2 ? "dayApproved" : "dayFree")) }'>
+                         styleClass='#{zz.status == 0 ? "dayUNcomplete" :  (zz.status == 1 ? "daySaved" : (zz.status == 2 ? "dayApproved" : "dayFree")) } ui-bar-c ui-cal-day'>
                   
-                  <amx:commandLink  styleClass="calendarCell" rendered="#{true}" text="#{zz.dayOfMonth}" id="cl12"
+                  <amx:commandLink  styleClass="calendarCell" rendered="#{zz.dayOfMonth > 0}" text="#{zz.dayOfMonth}" id="cl12"
                                action="*goToDay" actionListener="#{bindings.setSelDay.execute}">
-                    <amx:setPropertyListener id="sp2l1" from="#{zz.dayOfMonth}" to="#{viewScope.selDay}"/>
+                    <amx:setPropertyListener type="tapHold" id="sp2l1" from="#{zz.dayOfMonth}" to="#{viewScope.selDayH}"/>                                        
+                    <amx:setPropertyListener  id="sp23l1" from="#{zz.dayOfMonth}" to="#{viewScope.selDay}"/>                                        
+                    <amx:showPopupBehavior type="tapHold"  id="spb1" popupId="dayWeekActions"  align="overlapBottom" alignId="tl1" />
+                    <amx:actionListener type="tapHold" binding="#{bindings.tapHold.execute}" />
+                    
                   </amx:commandLink>
                
             </amx:cellFormat></amx:iterator>
@@ -71,5 +79,49 @@
       <amx:actionListener binding="#{bindings.gotoPrevious.execute}" id="al2" type="swipeRight"/>
     </amx:listItem>
     </amx:listView>
-  </amx:panelPage>
+    </amx:panelPage>
+    <amx:popup id="dayWeekActions" animation="pop" autoDismiss="true" inlineStyle="list-style-type:square;">
+    <amx:tableLayout id="tl2" layout="weighted" halign="center"
+                        width="100%" styleClass="calendarActionTable">
+    
+      <amx:rowLayout  rendered="true">
+        <amx:cellFormat halign="center" styleClass="calendarActionItemTable">
+         <amx:commandLink id="copyDay" text="Copy Day" styleClass="adfmf-commandButton-alert"
+                                       inlineStyle="width:60px" actionListener="#{bindings.copyDay.execute}"
+                                       shortDesc="Copy Day">
+                        <amx:closePopupBehavior popupId="dayWeekActions" id="cp1"/>
+                    </amx:commandLink>
+        </amx:cellFormat>
+      </amx:rowLayout>
+      <amx:rowLayout  rendered="true">
+        <amx:cellFormat halign="center" styleClass="calendarActionItemTable">
+         <amx:commandLink id="copyWeek" text="Copy Week" styleClass="adfmf-commandButton-alert"
+                                       inlineStyle="width:60px" actionListener="#{bindings.copyWeek.execute}"
+                                       shortDesc="Copy Week">
+                        <amx:closePopupBehavior popupId="dayWeekActions" id="cp2"/>
+                    </amx:commandLink>
+                      </amx:cellFormat>
+      </amx:rowLayout>
+     <amx:rowLayout  rendered="#{bindings.clipboardDay > -1 &amp;&amp; viewScope.selDayH != bindings.clipboardDay}">
+        <amx:cellFormat halign="center" styleClass="calendarActionItemTable">
+         <amx:commandLink id="pasteDay" text="Paste Day" styleClass="adfmf-commandButton-alert"
+                                       inlineStyle="width:60px" actionListener="#{bindings.pasteDay.execute}"
+                                       shortDesc="Paste Day">
+                        <amx:closePopupBehavior popupId="dayWeekActions" id="cp3"/>
+                    </amx:commandLink>
+                      </amx:cellFormat>
+      </amx:rowLayout>
+      <amx:rowLayout  rendered="#{bindings.clipboardWeek > -1 &amp;&amp; bindings.clipboardWeek != bindings.newWeek }">
+        <amx:cellFormat halign="center" styleClass="calendarActionItemTable lastCalendarActionItemTable">
+         <amx:commandLink id="pasteWeek" text="Paste Week" styleClass="adfmf-commandButton-alert"
+                                       inlineStyle="width:60px" actionListener="#{bindings.pasteWeek.execute}"
+                                       shortDesc="Paste Week">
+                        <amx:closePopupBehavior popupId="dayWeekActions" id="cp4"/>
+                    </amx:commandLink>
+      </amx:cellFormat>
+      </amx:rowLayout>
+      </amx:tableLayout>
+   
+    </amx:popup>
+  
 </amx:view>

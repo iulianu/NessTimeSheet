@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<References xmlns="http://xmlns.oracle.com/adf/jndi">
+   <Reference name="timesheetConn" className="oracle.adf.model.connection.url.HttpURLConnection" xmlns="">
+      <Factory className="oracle.adf.model.connection.url.URLConnectionFactory"/>
+      <RefAddresses>
+         <XmlRefAddr addrType="timesheetConn">
+            <Contents>
+               <urlconnection name="timesheetConn" url="http://172.30.145.189:8080/"/>
+            </Contents>
+         </XmlRefAddr>
+      </RefAddresses>
+   </Reference>
+</References>

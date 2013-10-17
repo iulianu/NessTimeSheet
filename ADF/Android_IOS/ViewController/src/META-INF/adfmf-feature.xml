@@ -5,8 +5,12 @@
       <adfmf:amx file="ness.Projects/Main-Flow.xml#Main-Flow">
         <adfmf:includes>
           <adfmf:include type="JavaScript" file="resources/js/DeviceBackButton.js" id="i2"/>
+          <adfmf:include type="JavaScript" file="resources/js/calendar.js" id="i1"/>
         </adfmf:includes>
       </adfmf:amx>
+    </adfmf:content>
+    <adfmf:content id="ness.Projects.2">
+      <adfmf:localHTML url="ness.Projects/untitled1.html"/>
     </adfmf:content>
   </adfmf:feature>
 </adfmf:features>

@@ -8,8 +8,10 @@ import java.util.Map;
 
 import  ness.mobile.Constants.WDStatus;
 
+import oracle.adfmf.dc.ws.rest.RestServiceAdapter;
 import oracle.adfmf.framework.api.AdfmfContainerUtilities;
 import oracle.adfmf.framework.api.AdfmfJavaUtilities;
+import oracle.adfmf.framework.api.Model;
 import oracle.adfmf.java.beans.PropertyChangeListener;
 import oracle.adfmf.java.beans.PropertyChangeSupport;
 import oracle.adfmf.java.beans.ProviderChangeListener;
@@ -21,24 +23,29 @@ public class WorkData {
     private int year;
     private String textCurrDate;
     
+    private Integer clipboardDay;
+    private Integer clipboardWeek;
+    private Integer newWeek;
+    private  int firstDayOfMonthInWeek;
+    
     private String selectedDay;
     private transient PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     protected transient ProviderChangeSupport providerChangeSupport = new ProviderChangeSupport(this);
     
     public static Map months = new HashMap();
     static{
-            months.put(Integer.valueOf("0"), "Jan");
-            months.put(Integer.valueOf("1"), "Feb");
-            months.put(Integer.valueOf("2"), "Mar");
-            months.put(Integer.valueOf("3"), "May");
-            months.put(Integer.valueOf("4"), "Apr");
-            months.put(Integer.valueOf("5"), "Jun");
-            months.put(Integer.valueOf("6"), "Jul");
-            months.put(Integer.valueOf("7"), "Aug");
-            months.put(Integer.valueOf("8"), "Sept");
-            months.put(Integer.valueOf("9"), "Oct");
-            months.put(Integer.valueOf("10"), "Nov");
-            months.put(Integer.valueOf("11"), "Dec");
+            months.put(new Integer(0), "Jan");
+            months.put(new Integer(1), "Feb");
+            months.put(new Integer(2), "Mar");
+            months.put(new Integer(3), "May");
+            months.put(new Integer(4), "Apr");
+            months.put(new Integer(5), "Jun");
+            months.put(new Integer(6), "Jul");
+            months.put(new Integer(7), "Aug");
+            months.put(new Integer(8), "Sept");
+            months.put(new Integer(9), "Oct");
+            months.put(new Integer(10), "Nov");
+            months.put(new Integer(11), "Dec");
 
         }
 
@@ -48,7 +55,9 @@ public class WorkData {
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
         setTextCurrDate(months.get(new Integer(month)) + ", " + year);
-        
+        clipboardDay = new Integer(-1);
+        clipboardWeek = new Integer(-1);
+        newWeek = new Integer(-1);
 
     }
     
@@ -60,9 +69,10 @@ public class WorkData {
             cal.set(Calendar.MONTH,month);
             cal.set(Calendar.YEAR,year);
             cal.set(Calendar.DAY_OF_MONTH,1);
-            double firstDayOfMonthInWeek = cal.get(Calendar.DAY_OF_WEEK);
+            firstDayOfMonthInWeek = cal.get(Calendar.DAY_OF_WEEK);
+            double fDOfMonthInWeek = firstDayOfMonthInWeek;
             double noDaysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-            double noWeeksInMonth = (noDaysInMonth - (7 - (firstDayOfMonthInWeek - 1)))/7 + 1;
+            double noWeeksInMonth = (noDaysInMonth - (7 - (fDOfMonthInWeek - 1)))/7 + 1;
             noWeeksInMonth =  Math.ceil(noWeeksInMonth);
             int idxDayOfMonth = 0;
             List wdsl = new ArrayList();
@@ -70,9 +80,9 @@ public class WorkData {
                 WorkingWeek workW = new WorkingWeek();
                 for (int j = 0; j < 7;j++) {
                     WorkingDay wd = new WorkingDay();
-                    if (firstDayOfMonthInWeek > 1) {
+                    if (fDOfMonthInWeek > 1) {
                         wd.setDayOfMonth("-1");
-                        firstDayOfMonthInWeek--;
+                        fDOfMonthInWeek--;
                     }
                     else {
                         wd.setDayOfMonth(String.valueOf(++idxDayOfMonth));
@@ -107,8 +117,24 @@ public class WorkData {
     
     
     public void setSelDay(Integer d) {
-        setSelectedDay(String.valueOf(d));
-       
+       setSelectedDay(String.valueOf(d));
+      /*   RestServiceAdapter restServ = Model.createRestServiceAdapter();
+        restServ.clearRequestProperties();
+        restServ.setConnectionName("timesheetConn");
+        restServ.setRequestType(RestServiceAdapter.REQUEST_TYPE_GET);
+        restServ.setRetryLimit(0);
+        restServ.setRequestURI("/timesheet/workingDay?userCode=du&dayMonthYear=101013");
+        String send = "nu merge";
+
+
+        try {
+            send = restServ.send("");            
+        } catch (Exception e) {
+            send = e.getMessage();
+        }
+
+        setSelectedDay(send);
+*/
     }
     
     public void gotoPrevious() {
@@ -123,7 +149,7 @@ public class WorkData {
             month--;
         }
         setTextCurrDate(months.get(new Integer(month)) + ", " + year);
-        providerChangeSupport.fireProviderRefresh("currentMonthWD");
+    //    providerChangeSupport.fireProviderRefresh("currentMonthWD");
         
        
     }
@@ -140,10 +166,60 @@ public class WorkData {
             month++;
         }
         setTextCurrDate(months.get(new Integer(month)) + ", " + year);
-        providerChangeSupport.fireProviderRefresh("currentMonthWD");
+   //     providerChangeSupport.fireProviderRefresh("currentMonthWD");
        
         
     }
+    
+    public void copyDay() {
+        setClipboardDay( new Integer(1));
+        setClipboardWeek(Integer.valueOf("-1"));
+            AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(), "unhighlightWeek",
+                                                                             new Object[] {});
+        }
+    
+    public void pasteDay() {
+            setClipboardDay(new Integer(-1));
+            setClipboardWeek(new Integer(-1));
+            AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(), "unhighlightWeek",
+                                                                            new Object[] {});
+        }
+    
+    public void copyWeek() {
+            setClipboardDay(new Integer(1));
+            setClipboardWeek( new Integer(1));
+            AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(), "unhighlightWeek",
+                                                                             new Object[] {});
+        }
+    
+    public void pasteWeek() {
+            setClipboardDay(new Integer(-1));
+            setClipboardWeek(new Integer(-1));
+            AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(), "unhighlightWeek",
+                                                                             new Object[] {});
+        }
+    
+    public void callJSHilightRow(Integer z) {
+        int lastDayOfWeek = 8 - firstDayOfMonthInWeek;
+        int week = 1;
+        
+        for (int i = 1; i <= 6;i++) {
+            if (z.intValue() <= lastDayOfWeek) {
+                week = i;
+                break;
+            }
+            lastDayOfWeek = lastDayOfWeek + 7;
+        }
+        setNewWeek(new Integer(week));
+            AdfmfContainerUtilities.invokeContainerJavaScriptFunction(AdfmfJavaUtilities.getFeatureName(), "highlightWeek",
+                                                                             new Object[] { "" + z + "" , "" + week + ""});
+    }
+    
+    public void tapHold(Integer z) {
+            callJSHilightRow(z);
+        }
+        
+    
     
     public String[] getStrings() {
         
@@ -206,5 +282,35 @@ public class WorkData {
 
     public String getSelectedDay() {
         return selectedDay;
+    }
+
+    public void setClipboardDay(Integer clipboardDay) {
+        Integer oldClipboardDay = this.clipboardDay;
+        this.clipboardDay = clipboardDay;
+        propertyChangeSupport.firePropertyChange("clipboardDay", oldClipboardDay, clipboardDay);
+    }
+
+    public Integer getClipboardDay() {
+        return clipboardDay;
+    }
+
+    public void setClipboardWeek(Integer clipboardWeek) {
+        Integer oldClipboardWeek = this.clipboardWeek;
+        this.clipboardWeek = clipboardWeek;
+        propertyChangeSupport.firePropertyChange("clipboardWeek", oldClipboardWeek, clipboardWeek);
+    }
+
+    public Integer getClipboardWeek() {
+        return clipboardWeek;
+    }
+
+    public void setNewWeek(Integer newWeek) {
+        Integer oldNewWeek = this.newWeek;
+        this.newWeek = newWeek;
+        propertyChangeSupport.firePropertyChange("newWeek", oldNewWeek, newWeek);
+    }
+
+    public Integer getNewWeek() {
+        return newWeek;
     }
 }

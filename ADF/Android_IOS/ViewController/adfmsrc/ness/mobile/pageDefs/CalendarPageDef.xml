@@ -86,5 +86,32 @@
                   RequiresUpdateModel="true" Action="invokeMethod" MethodName="setSelDay" IsViewObjectMethod="false">
       <NamedData NDName="d" NDValue="#{viewScope.selDay}" NDType="java.lang.Integer"/>
     </methodAction>
+    <methodAction id="copyDay" InstanceName="data.WorkData.dataProvider" DataControl="WorkData"
+                  RequiresUpdateModel="true" Action="invokeMethod" MethodName="copyDay" IsViewObjectMethod="false"/>
+    <methodAction id="copyWeek" InstanceName="data.WorkData.dataProvider" DataControl="WorkData"
+                  RequiresUpdateModel="true" Action="invokeMethod" MethodName="copyWeek" IsViewObjectMethod="false"/>
+    <methodAction id="pasteDay" InstanceName="data.WorkData.dataProvider" DataControl="WorkData"
+                  RequiresUpdateModel="true" Action="invokeMethod" MethodName="pasteDay" IsViewObjectMethod="false"/>
+    <methodAction id="pasteWeek" InstanceName="data.WorkData.dataProvider" DataControl="WorkData"
+                  RequiresUpdateModel="true" Action="invokeMethod" MethodName="pasteWeek" IsViewObjectMethod="false"/>
+    <methodAction id="tapHold" InstanceName="data.WorkData.dataProvider" DataControl="WorkData"
+                  RequiresUpdateModel="true" Action="invokeMethod" MethodName="tapHold" IsViewObjectMethod="false">
+      <NamedData NDName="z" NDValue="#{viewScope.selDayH}" NDType="java.lang.Integer"/>
+    </methodAction>
+    <attributeValues IterBinding="WorkDataIterator" id="clipboardDay">
+      <AttrNames>
+        <Item Value="clipboardDay"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="WorkDataIterator" id="clipboardWeek">
+      <AttrNames>
+        <Item Value="clipboardWeek"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="WorkDataIterator" id="newWeek">
+      <AttrNames>
+        <Item Value="newWeek"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

@@ -3,37 +3,27 @@
 width: 100%;
 }
 
-.calendarCell {
-    color: rgb(82,82,82) !important;
-}
-
-.calendarHeader {
-color:Gray !important;
-font-style: oblique;
-}
-
-.calendarHeaderFree {
-color:rgb(255,90,33) !important;
-}
 
 
-.textMonYear {
-font-size:small;
-color:rgb(247,247,247) !important;
-}
 
 .dayUNcomplete {
-background-color: rgb(198,198,198);
+background-image: -moz-linear-gradient(top,#f0f0f0,#e9eaec) ;
+background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#f0f0f0),color-stop(1,#e9eaec));
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#f0f0f0', EndColorStr='#e9eaec')" ;
 
 }
 
 .daySaved {
-background-color:rgb(165,231,255);
+background-image: -moz-linear-gradient(top,#f0f0f0,#e9eaed) ;
+background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#f0f0f0),color-stop(1,#e9eaed)) ;
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#f0f0f0', EndColorStr='#e9eaed')" ;
 
 }
 
 .dayApproved {
-background-color:rgb(181,255,181);
+background-image: -moz-linear-gradient(top,#f0f0f0,#e9eaee) ;
+background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#f0f0f0),color-stop(1,#e9eaee)) ;
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#f0f0f0', EndColorStr='#e9eaee')" ;
 
 }
 
@@ -42,23 +32,183 @@ color:rgb(255,90,33);
 
 }
 
-.calendarTable {
-width:80.0%;
 
-}
 
 .amx-listView.invisible {
    border-style:none; 
    background-color:transparent;
    border-bottom:none;
+   width:100% !important;
 }
  
 .amx-listView.invisible .amx-listItem {
   border-bottom: none;
   border-style:none; 
+  width:100% !important;
 }
  
 .amx-listView.invisible .amx-listItem.amx-listItem-selected {
   background-color:transparent;
   border-bottom: none;
+}
+
+
+.ui-datepicker-calendar {
+width: 100%;
+border-collapse: separate;
+margin-right: -30px;
+}
+
+.ui-datepicker-calendar th { padding-top: .3em; padding-bottom: .3em; }
+.ui-datepicker-calendar th span, .ui-datepicker-calendar span.ui-state-default { opacity: .3; }
+.ui-datepicker-calendar td a { padding-top: .5em; padding-bottom: .5em; }
+
+.ui-bar-c {
+border-width: 2px;
+padding: 0;
+text-align: center;
+border: 2px solid #b3b3b3;
+background: #e9eaeb;
+color: #3e3e3e;
+font-weight: bold;
+text-shadow: 0 1px 1px #fff;
+background-image: -moz-linear-gradient(top,#f0f0f0,#e9eaeb);
+background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#f0f0f0),color-stop(1,#e9eaeb));
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#f0f0f0', EndColorStr='#e9eaeb')";
+}
+
+
+.ui-cal-day:active {
+border: 1px solid #155678;
+background: #4596ce;
+font-weight: bold !important;
+color: White !important;
+text-decoration: none;
+background-image: -moz-linear-gradient(top,#85bae4,#5393c5) !important;
+background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#85bae4),color-stop(1,#5393c5));
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#85bae4', EndColorStr='#5393c5')" !important;
+outline: 0;
+}
+
+.calendarControlPanel {
+width: 100%;
+position: relative;
+padding: .4em 0;
+border-bottom: 0;
+font-weight: bold;
+-webkit-background-clip: padding-box;
+-moz-background-clip: padding-box;
+background-clip: padding-box;
+border-top-left-radius: .6em;
+border-top-right-radius: .6em;
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#f0f0f0', EndColorStr='#e9eaeb')" !important;
+background-image: -moz-linear-gradient(top,#f0f0f0,#e9eaeb) !important;
+background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#f0f0f0),color-stop(1,#e9eaeb)) !important;
+}
+
+.calendarCell {
+    color: rgb(82,82,82);
+    padding-top: .5em;
+    padding-bottom: .5em;
+    display: block;
+    padding: .2em 0;
+    font-weight: bold;
+    margin: 0;
+    border-width: 0;
+    text-align: center;
+    text-decoration: none;
+}
+
+.calendarCell:active {
+color: White !important;
+}
+
+.calendarHeader {
+color:Gray ;
+font-style: oblique;
+}
+
+.calendarHeaderFree {
+color:rgb(255,90,33);
+}
+
+.ui-datepicker-prev {
+left: 6px;
+
+}
+
+.ui-datepicker-next {
+right: 6px;
+}
+
+.ui-datepicker-btn {
+padding: 1px 0 1px 2px;
+position: absolute;
+top: .5em;
+margin-top: 0;
+background: Gray !important;
+}
+
+.ui-datepicker-btn:active {
+background: rgb(214,214,214)  !important;
+}
+
+.ui-datepicker-title {
+margin: 0 2.3em;
+line-height: 1.8em;
+text-align: center;
+display: block;
+}
+
+
+.calendarActionTable {
+
+font-size: 12.0pt;
+}
+
+.calendarActionItemTable {
+background: none;
+
+}
+
+.lastCalendarActionItemTable {
+border-bottom:none !important;
+padding-bottom: 0px !important;
+}
+
+.calendarActionItemTable:active {
+background: rgb(82,198,255) ;
+}
+
+.tableTest>tr>td {
+font-size: xx-small !important;
+border:  dotted thick rgb(54,255,110) !important;
+text-align: left !important;
+
+}
+
+.tableTest {
+font-size: xx-small !important;
+border:  dotted thick rgb(54,255,110) !important;
+text-align: left !important;
+
+}
+
+.highlightRow  .ui-bar-c.ui-cal-day {
+border: 1px solid #155678;
+background: #4596ce;
+font-weight: bold !important;
+color: White !important;
+text-decoration: none;
+background-image: -moz-linear-gradient(top,#85bae4,#5393c5) !important;
+background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#85bae4),color-stop(1,#5393c5));
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#000000')" !important;
+outline: 0;
+}
+
+.highlightRow  .ui-cal-day:active {
+background-image: -moz-linear-gradient(top,#85bfff,#539111) !important;
+background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0,#85bfff),color-stop(1,#539111));
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#85bfff', EndColorStr='#539111')" !important;
+
 }

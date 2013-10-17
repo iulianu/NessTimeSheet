@@ -67,6 +67,75 @@
             <value n="profileClass" v="oracle.adfmf.framework.dt.deploy.android.AndroidProfile"/>
             <value n="profileName" v="Android1"/>
          </hash>
+         <hash n="Android2">
+            <hash n="android_options">
+               <value n="android_deploy_debug_mode" v="false"/>
+            </hash>
+            <hash n="archiveOptions">
+               <value n="hasManifest" v="true"/>
+            </hash>
+            <hash n="dependencies">
+               <list n="dependencyList"/>
+            </hash>
+            <hash n="fileGroups">
+               <list n="groups">
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <value n="type" v="2"/>
+                        </hash>
+                        <hash>
+                           <value n="type" v="7"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="Project Output"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="DefaultFilters" v=""/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="internalName" v="project-output"/>
+                     <value n="type" v="1"/>
+                  </hash>
+               </list>
+            </hash>
+            <url n="jarURL" path="deploy/Android2/Android2.jar/"/>
+            <hash n="libraryDependencies">
+               <value n="IncludeLibrariesFromOtherContainers" v="true"/>
+            </hash>
+            <hash n="mnfImageOptions">
+               <list n="deviceTypes">
+                  <hash>
+                     <value n="appIconPath" v="resources/android/display-ldpi-icon.png"/>
+                     <value n="deviceTypeName" v="Low Density"/>
+                     <value n="landscapeSplashScreenPath" v="resources/android/display-land-ldpi-splashscreen.png"/>
+                     <value n="portraitSplashScreenPath" v="resources/android/display-port-ldpi-splashscreen.png"/>
+                  </hash>
+                  <hash>
+                     <value n="appIconPath" v="resources/android/display-xhdpi-icon.png"/>
+                     <value n="deviceTypeName" v="Extra-High Density"/>
+                     <value n="landscapeSplashScreenPath" v="resources/android/display-land-xhdpi-splashscreen.png"/>
+                     <value n="portraitSplashScreenPath" v="resources/android/display-port-xhdpi-splashscreen.png"/>
+                  </hash>
+                  <hash>
+                     <value n="appIconPath" v="resources/android/display-hdpi-icon.png"/>
+                     <value n="deviceTypeName" v="High Density"/>
+                     <value n="landscapeSplashScreenPath" v="resources/android/display-land-hdpi-splashscreen.png"/>
+                     <value n="portraitSplashScreenPath" v="resources/android/display-port-hdpi-splashscreen.png"/>
+                  </hash>
+                  <hash>
+                     <value n="appIconPath" v="resources/android/display-mdpi-icon.png"/>
+                     <value n="deviceTypeName" v="Medium Density"/>
+                     <value n="landscapeSplashScreenPath" v="resources/android/display-land-mdpi-splashscreen.png"/>
+                     <value n="portraitSplashScreenPath" v="resources/android/display-port-mdpi-splashscreen.png"/>
+                  </hash>
+               </list>
+            </hash>
+            <value n="profileClass" v="oracle.adfmf.framework.dt.deploy.android.AndroidProfile"/>
+            <value n="profileName" v="Android2"/>
+         </hash>
          <hash n="iOS1">
             <hash n="archiveOptions">
                <value n="hasManifest" v="true"/>
@@ -157,6 +226,7 @@
          <string v="Android1"/>
          <string v="iOS1"/>
          <string v="TimeSheet_archive"/>
+         <string v="Android2"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.model.PathsConfiguration">
