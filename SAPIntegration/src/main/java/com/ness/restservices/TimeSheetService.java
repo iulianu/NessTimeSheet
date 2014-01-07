@@ -12,6 +12,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.ness.dataprovider.DataProvider;
 import com.ness.model.Activities;
 import com.ness.model.Activity;
 import com.ness.model.LoggedWork;
@@ -70,11 +71,15 @@ public class TimeSheetService {
 	   @Produces(MediaType.APPLICATION_JSON)
 	   public WorkingMonth getWorkingMonth(@QueryParam("userCode") String userCode, @QueryParam("monthYear") String monthYear) 
 	   {
-		   WorkingMonth wm = new WorkingMonth();
-		   List<WorkingDay> workingDays = new ArrayList<WorkingDay>();
-		   workingDays.add(new WorkingDay());
-		   workingDays.add(new WorkingDay());
-		   wm.setWorkingDays(workingDays);
+		   WorkingMonth wm = DataProvider.getMonth(monthYear);
+		   
+		   wm.setUserCode(userCode);
+		   try {
+			Thread.sleep(3500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		   return wm;
 	   }
 	   

@@ -1,5 +1,6 @@
 package com.ness.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -29,6 +30,13 @@ public class WorkingMonth {
 
 	public void setWorkingDays(List<WorkingDay> workingDays) {
 		this.workingDays = workingDays;
+	}
+	
+	public void addWorkingDay(WorkingDay wd){
+		if (workingDays == null) {
+			workingDays = new ArrayList<WorkingDay>();
+		}
+		workingDays.add(wd);
 	}
 	
 	
