@@ -2,10 +2,10 @@
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<item
 		android:state_pressed="true"
-		android:drawable="@drawable/calendar_bg_orange" /> <!-- pressed -->
+		android:drawable="@color/focused_gridcell" /> <!-- pressed -->
 	<item
 		android:state_focused="true"
-		android:drawable="@drawable/calendar_bg_orange" /> <!-- focused -->
+		android:drawable="@color/focused_gridcell" /> <!-- focused -->
 	<item
-		android:drawable="@drawable/calendar_tile_small" /> <!-- default -->
+		android:drawable="@color/default_gridcell" /> <!-- default -->
 </selector>

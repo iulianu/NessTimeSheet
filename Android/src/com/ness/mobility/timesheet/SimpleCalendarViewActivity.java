@@ -13,6 +13,10 @@ import java.util.Locale;
 
 import com.ness.mobility.timesheet.movement.SwipeSupport;
 import com.ness.mobility.timesheet.movement.TimeSheetMovementDetection;
+import static com.ness.mobility.timesheet.constants.Constants.WDStatus;
+import com.ness.mobility.timesheet.domain.WorkingDay;
+import com.ness.mobility.timesheet.domain.WorkItem;
+import com.ness.mobility.timesheet.domain.WorkingWeek;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,6 +36,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 public class SimpleCalendarViewActivity extends Activity implements OnClickListener, SwipeSupport
 	{
 		private static final String tag = "SimpleCalendarViewActivity";
@@ -39,8 +44,8 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 		private ImageView calendarToJournalButton;
 		private Button selectedDayMonthYearButton;
 		private Button currentMonth;
-		private ImageView prevMonth;
-		private ImageView nextMonth;
+		
+		
 		private GridView calendarView;
 		private GridCellAdapter adapter;
 		private Calendar _calendar;
@@ -62,8 +67,7 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 				year = _calendar.get(Calendar.YEAR);
 				Log.d(tag, "Calendar Instance:= " + "Month: " + month + " " + "Year: " + year);
 
-				selectedDayMonthYearButton = (Button) this.findViewById(R.id.selectedDayMonthYear);
-				selectedDayMonthYearButton.setText("Selected: ");
+				
 				
 				gestureDetector = new GestureDetector(this.getApplicationContext(),new TimeSheetMovementDetection(this));
 			    
@@ -71,14 +75,12 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 				
 				
 				
-				prevMonth = (ImageView) this.findViewById(R.id.prevMonth);
-				prevMonth.setOnClickListener(this);
+				
 
 				currentMonth = (Button) this.findViewById(R.id.currentMonth);
 				currentMonth.setText(dateFormatter.format(dateTemplate, _calendar.getTime()));
 
-				nextMonth = (ImageView) this.findViewById(R.id.nextMonth);
-				nextMonth.setOnClickListener(this);
+				
 
 				calendarView = (GridView) this.findViewById(R.id.calendar);
 				mainview.setOnTouchListener(new View.OnTouchListener() {
@@ -122,17 +124,9 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 
 		@Override
 		public void onClick(View v)
-			{
-				if (v == prevMonth)
-					{
-						moveLeft();
-					}
-				if (v == nextMonth)
-					{
-						moveRight();
-					}
-
-			}
+		{
+			
+		}
 
 		@Override
 		public void onDestroy()
@@ -161,6 +155,9 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 				private TextView num_events_per_day;
 				private final HashMap eventsPerMonthMap;
 				private final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MMM-yyyy");
+				
+				private int firstDayOfMonthInWeek;
+				private WorkingWeek[] wds = null;
 
 				// Days in Current Month
 				public GridCellAdapter(Context context, int textViewResourceId, int month, int year)
@@ -211,6 +208,8 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 						return list.size();
 					}
 
+				
+			
 				/**
 				 * Prints Month
 				 * 
@@ -350,6 +349,7 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 				@Override
 				public View getView(int position, View convertView, ViewGroup parent)
 					{
+						Log.d(tag, "!!!!!!!!!!!! " + position);
 						View row = convertView;
 						if (row == null)
 							{
@@ -381,7 +381,7 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 						// Set the Day GridCell
 						gridcell.setText(theday);
 						gridcell.setTag(theday + "-" + themonth + "-" + theyear);
-						Log.d(tag, "Setting GridCell " + theday + "-" + themonth + "-" + theyear);
+						Log.d(tag, "!Setting GridCell " + theday + "-" + themonth + "&" + theyear);
 
 						if (day_color[1].equals("GREY"))
 							{
@@ -389,7 +389,7 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 							}
 						if (day_color[1].equals("WHITE"))
 							{
-								gridcell.setTextColor(Color.WHITE);
+								gridcell.setTextColor(Color.BLACK);
 							}
 						if (day_color[1].equals("BLUE"))
 							{

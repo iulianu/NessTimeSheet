@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="CustomTheme" parent="android:Theme" /> 
+	<style
+		name="calendar_header_style"
+		parent="@android:style/TextAppearance.Small">
+		<item
+			name="android:textColor">#FF6600</item>
+		<item
+			name="android:textStyle">bold
+		</item>
+		<item
+			name="android:textSize">12sp</item>
+		<item
+			name="android:background">@color/gridcell_header</item>
+	</style>
+	
+	<style name="ProgressBar">
+        <item name="android:indeterminateOnly">true</item>
+        <item name="android:indeterminateDrawable">@drawable/progress</item>
+        <item name="android:indeterminateBehavior">repeat</item>
+        <item name="android:indeterminateDuration">1000</item>
+        <item name="android:minWidth">32dip</item>
+        <item name="android:maxWidth">32dip</item>
+        <item name="android:minHeight">32dip</item>
+        <item name="android:maxHeight">32dip</item>
+    </style>
+	
+</resources>

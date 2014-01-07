@@ -15,4 +15,12 @@
 <color name="static_text_color">#003366</color>
 <color name="journal_entry_listitem_text_color">#003366</color>
 <color name="note_text_disabled">#333333</color>
+
+
+<color name="default_gridcell">#008cff</color>
+<color name="focused_gridcell">#00dbd3</color>
+<color name="gridcell_header">#3c4f56</color>
+<color name="bg">#000000</color>
+
+ 
 </resources>

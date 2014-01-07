@@ -16,6 +16,8 @@
 
 package com.ness.mobility.timesheet;
 
+import com.ness.mobility.timesheet.activity.base.RESTfulActivity;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -27,6 +29,11 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ProgressBar;
 
 /**
  * Demonstrates a "screen-slide" animation using a {@link ViewPager}. Because {@link ViewPager}
@@ -39,7 +46,7 @@ import android.view.MenuItem;
  *
  * @see ScreenSlidePageFragment
  */
-public class ScreenSlideActivity extends FragmentActivity   {
+public class ScreenSlideActivity extends RESTfulActivity   {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
@@ -57,23 +64,52 @@ public class ScreenSlideActivity extends FragmentActivity   {
     private PagerAdapter mPagerAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+    	requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+    	
         super.onCreate(savedInstanceState);
+    	
+       
         setContentView(R.layout.activity_screen_slide);
 
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
+                R.layout.action_bar);
+        ViewGroup v = (ViewGroup) findViewById(R.id.action_bar);
+        v.setPadding(0, 0, 0, 0);
+
+        mRefreshButton = (Button) findViewById(R.id.refresh_button);
+        
+        mRefreshButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                    mRefreshProgressIndicator.setVisibility(View.VISIBLE);
+                    mRefreshButton.setVisibility(View.INVISIBLE);
+                    refresh();
+            }
+    });
+
+    mRefreshProgressIndicator = (ProgressBar) findViewById(R.id.action_bar_progress);
+    mRefreshProgressIndicator.setIndeterminate(true);
+    mRefreshProgressIndicator.setVisibility(View.GONE);
+    
+    if (!mRefreshable) {
+            mRefreshButton.setVisibility(View.GONE);
+            mRefreshProgressIndicator.setVisibility(View.GONE);
+    }
+        
         // Instantiate a ViewPager and a PagerAdapter.
+        
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                // When changing pages, reset the action bar actions since they are dependent
-                // on which page is currently active. An alternative approach is to have each
-                // fragment expose actions itself (rather than the activity exposing actions),
-                // but for simplicity, the activity provides the actions in this sample.
+               
                 invalidateOptionsMenu();
             }
+            
         });
         
         mPager.setCurrentItem(4);
@@ -141,5 +177,13 @@ public class ScreenSlideActivity extends FragmentActivity   {
         public int getCount() {
             return NUM_PAGES;
         }
+       
+        
     }
+
+	@Override
+	protected void refresh() {
+		// TODO Auto-generated method stub
+		
+	}
 }

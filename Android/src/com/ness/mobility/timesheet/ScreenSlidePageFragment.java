@@ -26,22 +26,39 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import com.ness.mobility.timesheet.SimpleCalendarViewActivity.GridCellAdapter;
-
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.IntentFilter;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ness.mobility.timesheet.activity.base.RESTfulActivity;
+import com.ness.mobility.timesheet.constants.Constants.WDStatus;
+import com.ness.mobility.timesheet.datasource.TimesheetConstants;
+import com.ness.mobility.timesheet.datasource.dao.TimesheetDAO;
+import com.ness.mobility.timesheet.domain.WorkingDay;
+import com.ness.mobility.timesheet.domain.WorkingMonth;
+import com.ness.mobility.timesheet.services.WorkingHoursServiceHelper;
 
 /**
  * A fragment representing a single step in a wizard. The fragment shows a dummy title indicating
@@ -51,6 +68,9 @@ import android.widget.TextView;
  * ScreenSlideActivity} samples.</p>
  */
 public class ScreenSlidePageFragment extends Fragment {
+	
+	 private static final String TAG = ScreenSlidePageFragment.class.getSimpleName();
+	 
     /**
      * The argument key for the page number this fragment represents.
      */
@@ -70,7 +90,10 @@ public class ScreenSlidePageFragment extends Fragment {
 	private final DateFormat dateFormatter = new DateFormat();
 	private static final String dateTemplate = "MMMM yyyy";
 	private Button currentMonth;
-    
+	
+	private BroadcastReceiver requestReceiver;
+	private Long requestId;
+	private WorkingHoursServiceHelper mwhServiceHelper;
 
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
@@ -105,7 +128,7 @@ public class ScreenSlidePageFragment extends Fragment {
 		
 		_calendar.add(Calendar.MONTH, mPageNumber - 4);
 		
-		month = _calendar.get(Calendar.MONTH) + 1;
+		month = _calendar.get(Calendar.MONTH);
 		year = _calendar.get(Calendar.YEAR);
 		
 		currentMonth = (Button) rootView.findViewById(R.id.currentMonth);
@@ -125,7 +148,114 @@ public class ScreenSlidePageFragment extends Fragment {
         return mPageNumber;
     }
     
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	
+    	WorkingMonth wm = getWorkingMonthFromContentProvider();
+    	if (wm != null) {
+    		
+            adapter.setWorkingMonth(wm);
+            ((RESTfulActivity)getActivity()).setRefreshing(false);
+    	}
+    	else {
+    		 IntentFilter filter = new IntentFilter(WorkingHoursServiceHelper.ACTION_REQUEST_RESULT);
+             requestReceiver = new BroadcastReceiver() {
+
+                     @Override
+                     public void onReceive(Context context, Intent intent) {
+
+                             long resultRequestId = intent
+                                             .getLongExtra(WorkingHoursServiceHelper.EXTRA_REQUEST_ID, 0);
+
+                             Log.d(TAG, "Received intent " + intent.getAction() + ", request ID "
+                                             + resultRequestId);
+
+                             if (resultRequestId == requestId) {
+
+                                     Log.d(TAG, "Result is for our request ID");
+                                     
+                                     
+
+                                     int resultCode = intent.getIntExtra(WorkingHoursServiceHelper.EXTRA_RESULT_CODE, 0);
+
+                                     Log.d(TAG, "Result code = " + resultCode);
+
+                                     if (resultCode == 200) {
+
+                                             Log.d(TAG, "Updating UI with new data");
+
+                                             WorkingMonth wd = getWorkingMonthFromContentProvider();
+                                             adapter.setWorkingMonth(wd);
+
+                                     } else {
+                                    	 showMessage("Can not reach server! Please try later.");
+                                     }
+                                     ((RESTfulActivity)getActivity()).setRefreshing(false);
+                             } else {
+                                     Log.d(TAG, "Result is NOT for our request ID");
+                             }
+
+                     }
+             };
+
+             mwhServiceHelper = WorkingHoursServiceHelper.getInstance(getActivity().getApplicationContext());
+             getActivity().registerReceiver(requestReceiver, filter);
+
+             if (requestId == null) {
+            	 	((RESTfulActivity)getActivity()).setRefreshing(true);
+                     requestId = mwhServiceHelper.getMonthWorkingHours("P3700322", "" + (month) + "" +year);
+             } else if (mwhServiceHelper.isRequestPending(requestId)) {
+            	 ((RESTfulActivity)getActivity()).setRefreshing(true);
+             } else {
+            	 ((RESTfulActivity)getActivity()).setRefreshing(false);
+            	 WorkingMonth wd = getWorkingMonthFromContentProvider();
+                 adapter.setWorkingMonth(wd);
+             }
+    	}
+    	
+    }
     
+    @Override
+    public void onPause() {
+            super.onPause();
+
+            // Unregister for broadcast
+            if (requestReceiver != null) {
+                    try {
+                    	getActivity().unregisterReceiver(requestReceiver);
+                    } catch (IllegalArgumentException e) {
+                            Log.e(TAG, e.getLocalizedMessage(), e);
+                    }
+            }
+    }
+    
+    
+    private WorkingMonth getWorkingMonthFromContentProvider() {
+
+    	WorkingMonth wm = null;
+
+        Cursor cursor = getActivity().getContentResolver().query(TimesheetConstants.CONTENT_URI_MONTHTMS, null, null, null, null);
+
+        String monthDay = "" + (month) + "" +year;
+        if (TimesheetDAO.isMonthDataFetched(getActivity().getApplicationContext(), monthDay)) {
+        	wm = TimesheetDAO.getMonthDays(getActivity().getApplicationContext(), monthDay);
+        }
+
+        cursor.close();
+
+        return wm;
+}
+    
+   
+
+    		private void showMessage(String message) {
+        
+                Toast toast = Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+      
+}
     
  // Inner Class
  		public class GridCellAdapter extends BaseAdapter implements OnClickListener
@@ -133,29 +263,38 @@ public class ScreenSlidePageFragment extends Fragment {
  				private static final String tag = "GridCellAdapter";
  				private final Context _context;
 
- 				private final List<String> list;
+ 				private  List<WorkingDay> list;
  				private static final int DAY_OFFSET = 1;
  				private final String[] weekdays = new String[]{"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
- 				private final String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
- 				private final int[] daysOfMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+ 				
+ 				
  				private final int month, year;
  				private int daysInMonth, prevMonthDays;
  				private int currentDayOfMonth;
+ 				private int currentMonth;
  				private int currentWeekDay;
- 				private Button gridcell;
+ 				
  				private TextView num_events_per_day;
  				private final HashMap eventsPerMonthMap;
  				private final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MMM-yyyy");
+ 				private WorkingMonth workingMonth;
+ 				final Animation animZoomin;
+ 				final Animation animZoomout;
+ 				
+ 				
+
 
  				// Days in Current Month
  				public GridCellAdapter(Context context, int textViewResourceId, int month, int year)
  					{
  						super();
  						this._context = context;
- 						this.list = new ArrayList<String>();
+ 						this.list = new ArrayList<WorkingDay>();
  						this.month = month;
  						this.year = year;
 
+ 						animZoomin = AnimationUtils.loadAnimation(this._context, R.anim.anim_scale_zoomin);
+ 						animZoomout = AnimationUtils.loadAnimation(this._context, R.anim.anim_scale_zoomout);
  						Log.d(tag, "==> Passed in Date FOR Month: " + month + " " + "Year: " + year);
  						Calendar calendar = Calendar.getInstance();
  						setCurrentDayOfMonth(calendar.get(Calendar.DAY_OF_MONTH));
@@ -170,22 +309,16 @@ public class ScreenSlidePageFragment extends Fragment {
  						// Find Number of Events
  						eventsPerMonthMap = findNumberOfEventsPerMonth(year, month);
  					}
- 				private String getMonthAsString(int i)
- 					{
- 						return months[i];
- 					}
+ 				
 
  				private String getWeekDayAsString(int i)
  					{
  						return weekdays[i];
  					}
 
- 				private int getNumberOfDaysOfMonth(int i)
- 					{
- 						return daysOfMonth[i];
- 					}
+ 				
 
- 				public String getItem(int position)
+ 				public WorkingDay getItem(int position)
  					{
  						return list.get(position);
  					}
@@ -196,6 +329,20 @@ public class ScreenSlidePageFragment extends Fragment {
  						return list.size();
  					}
 
+ 				
+ 				public void setWorkingMonth(WorkingMonth wm) {
+ 					workingMonth = wm;
+ 					this.notifyDataSetChanged();
+ 				}
+ 				
+ 				
+ 				@Override
+ 				public void notifyDataSetChanged() {
+ 					if (getCount() > 0)
+ 						printMonth(month, year);
+ 					super.notifyDataSetChanged();
+ 				}
+ 				
  				/**
  				 * Prints Month
  				 * 
@@ -204,58 +351,51 @@ public class ScreenSlidePageFragment extends Fragment {
  				 */
  				private void printMonth(int mm, int yy)
  					{
+ 						list = new ArrayList<WorkingDay>();
  						Log.d(tag, "==> printMonth: mm: " + mm + " " + "yy: " + yy);
  						// The number of days to leave blank at
  						// the start of this month.
  						int trailingSpaces = 0;
  						int leadSpaces = 0;
  						int daysInPrevMonth = 0;
- 						int prevMonth = 0;
- 						int prevYear = 0;
- 						int nextMonth = 0;
- 						int nextYear = 0;
+ 						
 
- 						int currentMonth = mm - 1;
- 						String currentMonthName = getMonthAsString(currentMonth);
- 						daysInMonth = getNumberOfDaysOfMonth(currentMonth);
+ 						int currentMonth = mm;
+ 						
+ 						GregorianCalendar cal = new GregorianCalendar(yy, currentMonth, 1);
+ 						
+ 						
+ 						
 
- 						Log.d(tag, "Current Month: " + " " + currentMonthName + " having " + daysInMonth + " days.");
+ 						
 
  						// Gregorian Calendar : MINUS 1, set to FIRST OF MONTH
- 						GregorianCalendar cal = new GregorianCalendar(yy, currentMonth, 1);
+ 						
  						Log.d(tag, "Gregorian Calendar:= " + cal.getTime().toString());
 
+ 						cal.add(Calendar.MONTH, -1);
  						if (currentMonth == 11)
  							{
- 								prevMonth = currentMonth - 1;
- 								daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
- 								nextMonth = 0;
- 								prevYear = yy;
- 								nextYear = yy + 1;
- 								Log.d(tag, "*->PrevYear: " + prevYear + " PrevMonth:" + prevMonth + " NextMonth: " + nextMonth + " NextYear: " + nextYear);
+ 							
+ 								daysInPrevMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+ 							
  							}
  						else if (currentMonth == 0)
  							{
- 								prevMonth = 11;
- 								prevYear = yy - 1;
- 								nextYear = yy;
- 								daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
- 								nextMonth = 1;
- 								Log.d(tag, "**--> PrevYear: " + prevYear + " PrevMonth:" + prevMonth + " NextMonth: " + nextMonth + " NextYear: " + nextYear);
+ 								
+ 								daysInPrevMonth = 31; 								
  							}
  						else
  							{
- 								prevMonth = currentMonth - 1;
- 								nextMonth = currentMonth + 1;
- 								nextYear = yy;
- 								prevYear = yy;
- 								daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
- 								Log.d(tag, "***---> PrevYear: " + prevYear + " PrevMonth:" + prevMonth + " NextMonth: " + nextMonth + " NextYear: " + nextYear);
+ 								
+ 								daysInPrevMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH); 								
  							}
 
+ 						cal.add(Calendar.MONTH, 1);
  						// Compute how much to leave before before the first day of the
  						// month.
  						// getDay() returns 0 for Sunday.
+ 						daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
  						int currentWeekDay = cal.get(Calendar.DAY_OF_WEEK) - 1;
  						trailingSpaces = currentWeekDay;
 
@@ -267,33 +407,61 @@ public class ScreenSlidePageFragment extends Fragment {
  							{
  								++daysInMonth;
  							}
+ 						
+ 						//header Days
+ 						for (int i = 0; i < 7;i++) {
+ 							list.add(null);
+ 						}
 
  						// Trailing Month days
  						for (int i = 0; i < trailingSpaces; i++)
  							{
- 								Log.d(tag, "PREV MONTH:= " + prevMonth + " => " + getMonthAsString(prevMonth) + " " + String.valueOf((daysInPrevMonth - trailingSpaces + DAY_OFFSET) + i));
- 								list.add(String.valueOf((daysInPrevMonth - trailingSpaces + DAY_OFFSET) + i) + "-GREY" + "-" + getMonthAsString(prevMonth) + "-" + prevYear);
+ 								WorkingDay wd = new WorkingDay();
+ 								wd.setDayOfMonth(daysInPrevMonth - (trailingSpaces-i) + DAY_OFFSET);
+ 								wd.setStatus(WDStatus.OTHER_MONTH);
+ 								list.add(wd);
  							}
 
  						// Current Month Days
+ 						if (workingMonth != null && workingMonth.getWorkingDays() != null)
+ 						{
+ 						HashMap<Integer, WorkingDay> wmonth = workingMonth.getWorkingDays();
  						for (int i = 1; i <= daysInMonth; i++)
  							{
- 								Log.d(currentMonthName, String.valueOf(i) + " " + getMonthAsString(currentMonth) + " " + yy);
- 								if (i == getCurrentDayOfMonth())
- 									{
- 										list.add(String.valueOf(i) + "-BLUE" + "-" + getMonthAsString(currentMonth) + "-" + yy);
- 									}
- 								else
- 									{
- 										list.add(String.valueOf(i) + "-WHITE" + "-" + getMonthAsString(currentMonth) + "-" + yy);
- 									}
+ 							//	Log.d(currentMonthName, String.valueOf(i) + " " + getMonthAsString(currentMonth) + " " + yy);
+ 								
+								WorkingDay wd = wmonth.get(i);
+								int curDaysNoAdded = list.size();
+								if ((curDaysNoAdded) % 7 == 0 || curDaysNoAdded % 7   == 6)
+ 									wd.setStatus(WDStatus.WEEKEND);								
+ 								list.add(wd);
+ 															
  							}
-
+ 						}
+ 						else
+ 						{
+ 							for (int i = 1; i <= daysInMonth; i++)
+ 							{
+ 							//	Log.d(currentMonthName, String.valueOf(i) + " " + getMonthAsString(currentMonth) + " " + yy);
+ 								
+								WorkingDay wd = new WorkingDay();
+ 								wd.setDayOfMonth(i); 								
+ 								list.add(wd);
+ 								int curDaysNoAdded = list.size();
+ 								if ((curDaysNoAdded) % 7 == 0 || curDaysNoAdded % 7   == 1)
+ 									wd.setStatus(WDStatus.WEEKEND);
+ 								else
+ 									wd.setStatus(WDStatus.UNCOMPLETE); 								
+ 							}
+ 						}
  						// Leading Month days
  						for (int i = 0; i < list.size() % 7; i++)
  							{
- 								Log.d(tag, "NEXT MONTH:= " + getMonthAsString(nextMonth));
- 								list.add(String.valueOf(i + 1) + "-GREY" + "-" + getMonthAsString(nextMonth) + "-" + nextYear);
+ 								
+ 								WorkingDay wd = new WorkingDay();
+ 								wd.setDayOfMonth(i + 1);
+ 								wd.setStatus(WDStatus.OTHER_MONTH);
+ 								list.add(wd);
  							}
  					}
 
@@ -335,7 +503,22 @@ public class ScreenSlidePageFragment extends Fragment {
  				@Override
  				public View getView(int position, View convertView, ViewGroup parent)
  					{
- 						View row = convertView;
+ 					
+ 					View row = convertView;
+ 					if (position < 7) {
+ 						if (row == null)
+						{
+							LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+							row = inflater.inflate(R.layout.calendar_day_gridcell_header, parent, false);
+						}
+ 						
+ 						TextView gridcell = (TextView) row.findViewById(R.id.calendar_day_gridcell_header);
+ 						
+ 						gridcell.setText(weekdays[position]);
+ 						
+ 					}
+ 					else {
+ 						
  						if (row == null)
  							{
  								LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -343,16 +526,19 @@ public class ScreenSlidePageFragment extends Fragment {
  							}
 
  						// Get a reference to the Day gridcell
- 						gridcell = (Button) row.findViewById(R.id.calendar_day_gridcell);
- 						gridcell.setOnClickListener(this);
+ 						Button gridcell = (Button) row.findViewById(R.id.calendar_day_gridcell);
+ 						
 
  						// ACCOUNT FOR SPACING
 
- 						Log.d(tag, "Current Day: " + getCurrentDayOfMonth());
- 						String[] day_color = list.get(position).split("-");
- 						String theday = day_color[0];
- 						String themonth = day_color[2];
- 						String theyear = day_color[3];
+ 				//		Log.d(tag, "Current Day: " + getCurrentDayOfMonth());
+ 						WorkingDay day_color = list.get(position);  
+ 						
+ 						if (day_color == null)
+ 							return row;
+ 						int theday = day_color.getDayOfMonth();
+ 						//String themonth = day_color[2];
+ 						//String theyear = day_color[3];
  						if ((!eventsPerMonthMap.isEmpty()) && (eventsPerMonthMap != null))
  							{
  								if (eventsPerMonthMap.containsKey(theday))
@@ -364,24 +550,83 @@ public class ScreenSlidePageFragment extends Fragment {
  							}
 
  						// Set the Day GridCell
- 						gridcell.setText(theday);
- 						gridcell.setTag(theday + "-" + themonth + "-" + theyear);
- 						Log.d(tag, "Setting GridCell " + theday + "-" + themonth + "-" + theyear);
-
- 						if (day_color[1].equals("GREY"))
+ 						gridcell.setText(String.valueOf(day_color.getDayOfMonth()));
+ 						gridcell.setTag(theday );
+ 				//		Log.d(tag, "Setting GridCell " + theday + "-" );
+ 						
+ 						gridcell.setBackgroundColor(Color.rgb(235, 235, 235));
+ 						gridcell.setTextColor(Color.DKGRAY);
+ 						boolean enabled = true;
+ 						if (day_color.getStatus() == WDStatus.UNCOMPLETE)
  							{
- 								gridcell.setTextColor(Color.LTGRAY);
+ 							gridcell.setBackgroundColor(Color.rgb(190, 216, 230));
  							}
- 						if (day_color[1].equals("WHITE"))
- 							{
- 								gridcell.setTextColor(Color.WHITE);
- 							}
- 						if (day_color[1].equals("BLUE"))
- 							{
- 								gridcell.setTextColor(getResources().getColor(R.color.static_text_color));
- 							}
- 						return row;
+ 						if (day_color.getStatus() == WDStatus.COMPLETE_APPROVWED)
+							{
+ 							gridcell.setBackgroundColor(Color.rgb(168, 179, 230));
+							}
+ 						if (day_color.getStatus() == WDStatus.COMPLETE_SAVED)
+						{
+ 							gridcell.setBackgroundColor(Color.rgb(169, 180, 170));
+						}
+ 						if (day_color.getStatus() == WDStatus.HOLIDAY)
+						{
+ 							gridcell.setBackgroundColor(Color.rgb(250, 249, 250));
+						}
+ 						if (day_color.getStatus() == WDStatus.OTHER_MONTH)
+ 						{
+ 							gridcell.setTextColor(Color.rgb(249, 249, 249));
+ 							gridcell.setBackgroundColor(Color.rgb(249, 249, 249));
+ 							gridcell.setEnabled(false);
+ 							enabled = false;
+ 						}
+ 						if (day_color.getStatus() == WDStatus.WEEKEND)
+						{
+							gridcell.setTextColor(Color.LTGRAY);
+							gridcell.setBackgroundColor(Color.rgb(249, 249, 249));
+							gridcell.setEnabled(false);
+							enabled = false;
+						}
+ 						
+ 						if (enabled) {
+ 							gridcell.setOnClickListener(new View.OnClickListener() {
+ 							    public void onClick(View v) {
+ 							    	Log.d(tag, "!!!! ########Short Click: " +  v.getTag());
+ 							    	
+ 							    }
+ 							});
+ 							
+ 							gridcell.setOnLongClickListener(new View.OnLongClickListener() {
+								
+								@Override
+								public boolean onLongClick(View v) {
+									Log.d(tag, "!!!! ########Long Click: " +  v.getTag());
+									return false;
+								}
+							});
+ 							gridcell.setOnTouchListener(new View.OnTouchListener() {
+								
+								@Override
+								public boolean onTouch(View v, MotionEvent event) {
+									if(event.getAction() == MotionEvent.ACTION_DOWN) {
+									//	RelativeLayout rl = ((RelativeLayout)v.getParent());
+										v.bringToFront();
+										v.startAnimation(animZoomout);
+										
+									//	rl.addView(v);
+									}
+									if(event.getAction() == MotionEvent.ACTION_UP) {
+										v.startAnimation(animZoomin);
+										v.invalidate();
+									}
+									return false;
+								}
+							});
+ 						}
  					}
+ 					return row;
+ 				}
+ 				
  				@Override
  				public void onClick(View view)
  					{
