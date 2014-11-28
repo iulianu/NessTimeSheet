@@ -1,0 +1,12 @@
+{
+  networks: {
+    "X0871701": {
+      description: "SES_KokaKola-billable"
+      activities: {
+         "0001": {
+           description: "Billable Offshore"
+         }
+      }
+    }
+  }
+}

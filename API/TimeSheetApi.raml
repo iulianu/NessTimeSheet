@@ -1,0 +1,170 @@
+#%RAML 0.8
+title: Ness Timesheet REST API
+version: 1.0
+baseUri: https://api.ess.ness.com/{version}
+securitySchemes:
+  - oauth_2_0:
+      settings:        
+        accessTokenUri: https://api.ess.ness.com/login/oauth/access_token
+        authorizationUri: https://api.ess.ness.com/login/oauth/authorize
+      type: OAuth 2.0
+securedBy: [ oauth_2_0 ]
+mediaType: application/json
+documentation:
+  - title: Introduction
+    content: | 
+      Write an introduction here.
+
+traits:
+  - paged:
+      usage: Apply to collections.
+      description: Controls access to paged resources
+      queryParameters:
+        page:
+          required: false
+          type: integer
+          default: 1
+          description: For paginated results, the page number, starting from 1, to return.
+  - errorHandling: 
+      usage: Apply to any resource that returns the standard set of error status codes.
+      description: A set of standard error codes.
+      responses:
+        400:
+          description: Bad request. The body of this response may give more details of the specific issue.
+          body:
+            application/json:
+              example: |
+                {
+                 id: "server12.4fgh-5b32.920012212",     
+                 timestamp: "2014-01-13T12:35:00Z",
+                 messages: [ { 
+                   message: "Missing profile",
+                   regards: "profile",
+                   code: "X-400-profile"
+                 }
+                ]
+                }
+        401:
+          description: Unauthorized - check your credentials.
+        403:
+          description: Forbidden - you are not permitted to make this request.
+        404:
+          description: The resource was not found.
+        500:
+          description: Server error. The body of this response may give additional details. This status code should be considered a bug, and reported.
+          body:
+            application/json:
+              example: |
+                {
+                 id: "server12.4fgh-5b32.920012212",     
+                 timestamp: "2014-01-13T12:35:00Z",
+                 messages: [ { 
+                   message: "Server error",
+                   code: "X-500-477"
+                 }
+                ]
+                }
+  - rateLimited:
+      usage: Apply to resources that are rate limited.
+      description: | 
+        To protect the API, requests may be rate limited.  
+        
+        Your limit is based on your Account. By default, this will be 5,000 API calls per hour. If you believe your application needs a higher limit, please contact support.
+        
+        If you reach your limit, a HTTP status code 429 ("Too many requests") is returned. In this case, the header `Retry-After` indicates how many seconds to wait before the rate limit window resets.
+      responses:
+        429:
+          description: Request rate exceeded.
+          headers:
+            X-Rate-Limit-Remaining:
+             description: The number of request left in the 60 minute window. 
+             type: integer
+             required: true
+            X-Rate-Limit-Reset:
+              description: The number of seconds until the rate limit window resets.
+              type: integer
+              required: true
+
+/codes:
+  is: [errorHandling, rateLimited]
+  description: |
+    TODO
+  
+  get:
+    description: |
+      TODO
+    responses:
+      200:
+        description: Success.
+        body:
+          application/json:
+            example: !include codes_1.json
+
+/workdays:
+  is: [errorHandling, rateLimited, paged]
+  description: |
+    TODO
+
+  get: 
+    description: |
+      TODO
+    queryParameters:
+      from: 
+        description: The beginning of the interval
+        type: date
+        required: true
+      to: 
+        description: The end of the interval
+        type: date
+        required: true
+    responses:
+      200:
+        description: Success.
+        body:
+          application/json:
+            example: !include workdays_1.json
+  patch:
+    description: |
+      Update one or more values of one or more workdays.
+       Patching the 'released' field releases the worklog(s) for approval.
+  /{id}:
+    uriParameters:
+      id:
+        type: string
+        description: The ID for the workday
+        example: "3559"
+    is: [errorHandling, rateLimited]
+    get: 
+      description: Request the worklogs of a particular workday.
+      responses:
+        200:
+          description: Success, the detailed workday including worklogs.
+          body:
+            application/json:
+              example: !include workdays_1.json
+    put:
+      description: |
+        Replace the worklogs with the supplied body.
+        The workday must NOT have been previously released.
+      body:
+        application/json:
+          example: !include workdays_1.json
+      responses:
+        200:
+          description: Success, with no body returned
+    patch:
+      description: |
+        Update one or more values of the workday.
+        Patching the 'released' field releases the worklog(s) for approval
+      body:
+        application/json:
+          example: |
+            {
+              released: true
+            }
+      responses:
+        200:
+          description: Success, with no body returned
+ 
+ 
+    

@@ -1,0 +1,13 @@
+{
+  id: "20141124",
+  plannedHours: "8.00",
+  worklogs: [
+    { id: "axkjfldas",
+      network: "X0871701",
+      activity: "0001"
+      actualHours: "8.00"
+      released: false,
+      approved: false
+    }
+  ]
+}

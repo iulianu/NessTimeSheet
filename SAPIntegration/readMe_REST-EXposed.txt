@@ -1,3 +1,7 @@
+WARNING! WARNING! This is not the API. The real REST API is 
+defined in the API subdirectory, in RAML format.
+
+
 GET {timesheet-server}/timesheet/workingDay?userCode=XX&userCode=010113
  produces(JSON EXAMPLE)
   {"dayInMonth":1,"status":1,"loggedWorkItems":[{"hours":8,"network":{"code":"XXX3700zzz","name":"VIX"},"activity":{"code":"act1","name":"Activity 1"}}]}
