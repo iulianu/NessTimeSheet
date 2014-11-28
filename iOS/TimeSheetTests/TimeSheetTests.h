@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Ness. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface TimeSheetTests : SenTestCase
+@interface TimeSheetTests : XCTestCase
 
 @end
